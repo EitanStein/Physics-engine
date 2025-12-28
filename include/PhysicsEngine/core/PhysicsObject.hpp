@@ -23,9 +23,23 @@ public:
     }
 
     const Point& getPos() const { return body->getPosition(); }
+    // TODO handle in circle Physics class
+    double getRadius() const { return static_cast<Circle*>(shape.get())->getRadius();}
 
     void update(double time_step){
         // TODO handle collisions
         body->update(time_step);
     }
 };
+
+
+// TODO return collision info instead of bool
+// TODO potantially change to 'willCollide in upcoming time step'
+bool areCirclesOverlapping(const PhysicsObject& obj1, const PhysicsObject& obj2){
+    double origin_dist = dist(obj1.getPos(), obj2.getPos());
+    // TODO tangent circles considered overlap or not
+    if(origin_dist <= obj1.getRadius() + obj2.getRadius())
+        return true;
+    
+    return false;
+}
