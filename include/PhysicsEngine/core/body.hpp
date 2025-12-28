@@ -17,6 +17,9 @@ public:
         position += (velocity + vel_increase / 2) * time_step;
         velocity += vel_increase;
     }
+
+    void applyForce(const DirVector& direction) {acceleration += direction;}
+
     const Point& getPosition() const {return position;}
     const DirVector& getVelocity() const {return velocity;}
     const DirVector& getAcceleration() const {return acceleration;}
