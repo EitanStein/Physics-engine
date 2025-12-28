@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 struct Point{
     double x;
     double y;
@@ -22,8 +24,6 @@ struct Point{
 
 typedef Point DirVector;
 
-double dist(const Point& first, const Point& second){ // TODO change dist function
-    double x_dist = (first.x > second.x) ? first.x - second.x : second.x - first.x;
-    double y_dist = (first.y > second.y) ? first.y - second.y : second.y - first.y;
-    return x_dist + y_dist;
+double dist(const Point& p1, const Point& p2){ 
+    return std::sqrt(std::pow(p1.x  - p2.x, 2) + std::pow(p1.y  - p2.y, 2));
 }
