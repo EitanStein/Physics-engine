@@ -14,5 +14,14 @@ TEST_CASE("acceleration changes are accurate", "Physics"){
     test_body.update(2);
     REQUIRE(test_body.getPosition() == Point(6,8));
     REQUIRE(test_body.getVelocity() == DirVector(5,7));
+}
 
+TEST_CASE("Apply force is working", "Physics"){
+    PhysicsObject object(3, Point(0, 5));
+    object.update(1);
+    REQUIRE(object.getPos() == Point(0, 0));
+
+    object.applyForce(DirVector(0, 20));
+    object.update(1);
+    REQUIRE(object.getPos() == Point(0, -5));
 }

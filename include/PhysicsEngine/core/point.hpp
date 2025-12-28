@@ -7,9 +7,9 @@ struct Point{
     Point(double x=0, double y=0) : x(x), y(y) {}
 
     Point(const Point&) = default;
-    Point(const Point&&) = default;
+    Point(Point&&) = default;
     Point& operator=(const Point&) = default;
-    Point& operator=(const Point&&) = default;
+    Point& operator=(Point&&) = default;
 
     Point operator*(double num) {return Point(x*num, y*num);}
     Point operator/(double num) {return Point(x/num, y/num);}

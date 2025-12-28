@@ -22,6 +22,8 @@ public:
         return shape->contains(body->getPosition(), point);
     }
 
+    const Point& getPos() const { return body->getPosition(); }
+
     void update(double time_step){
         // TODO handle collisions
         body->update(time_step);
