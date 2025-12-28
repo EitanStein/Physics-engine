@@ -4,7 +4,7 @@
 
 class Shape {
 public:
-    virtual bool isInShape(const Point& pos, const Point& point) const {return false;};
+    virtual bool contains(const Point& pos, const Point& point) const {return false;};
 };
 
 class Circle : public Shape{
@@ -12,5 +12,5 @@ private:
     double radius;
 public:
     Circle(double radius) : radius(radius) {}
-    bool isInShape(const Point& pos, const Point& point) const override { return dist(pos, point) <= radius;}
+    bool contains(const Point& pos, const Point& point) const override { return dist(pos, point) <= radius;}
 };

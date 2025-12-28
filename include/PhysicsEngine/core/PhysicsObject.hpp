@@ -16,8 +16,10 @@ public:
         body = std::make_unique<Body>(pos, DirVector(), DirVector(0, -10));
     }
 
-    bool isInContactWith(const Point& point) const{
-        return shape->isInShape(body->getPosition(), point);
+    void applyForce(const DirVector& direction) { body->applyForce(direction); }
+
+    bool contains(const Point& point) const{
+        return shape->contains(body->getPosition(), point);
     }
 
     void update(double time_step){

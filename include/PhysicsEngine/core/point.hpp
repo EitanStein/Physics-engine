@@ -6,6 +6,11 @@ struct Point{
 
     Point(double x=0, double y=0) : x(x), y(y) {}
 
+    Point(const Point&) = default;
+    Point(const Point&&) = default;
+    Point& operator=(const Point&) = default;
+    Point& operator=(const Point&&) = default;
+
     Point operator*(double num) {return Point(x*num, y*num);}
     Point operator/(double num) {return Point(x/num, y/num);}
     Point operator+(const Point& other) {return Point(x+other.x, y+other.y);}
@@ -15,7 +20,7 @@ struct Point{
     bool operator==(const Point& other) const {return (x == other.x && y == other.y);}
 };
 
-using DirVector = Point;
+typedef Point DirVector;
 
 double dist(const Point& first, const Point& second){ // TODO change dist function
     double x_dist = (first.x > second.x) ? first.x - second.x : second.x - first.x;

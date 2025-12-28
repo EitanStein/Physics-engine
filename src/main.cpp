@@ -10,7 +10,7 @@ int main(){
     int repeats = 100;
     for(int i = 0 ; i < repeats ; ++i){
         object.update(timestep);
-        if(object.isInContactWith(origin))
+        if(object.contains(origin))
             std::cout << "touching origin\n";
     }
     
