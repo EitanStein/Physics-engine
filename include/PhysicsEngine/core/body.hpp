@@ -19,6 +19,7 @@ public:
     }
 
     void applyForce(const DirVector& direction) {acceleration += direction;}
+    void resetSpeed(const DirVector& direction) {velocity = direction;}
 
     const Point& getPosition() const {return position;}
     const DirVector& getVelocity() const {return velocity;}

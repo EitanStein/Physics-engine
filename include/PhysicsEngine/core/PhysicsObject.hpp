@@ -17,6 +17,7 @@ public:
     }
 
     void applyForce(const DirVector& direction) { body->applyForce(direction); }
+    void resetSpeed(const DirVector& direction) { body->resetSpeed(direction); }
 
     bool contains(const Point& point) const{
         return shape->contains(body->getPosition(), point);
