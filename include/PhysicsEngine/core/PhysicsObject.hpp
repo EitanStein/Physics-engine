@@ -81,10 +81,4 @@ void resolveCirclesOverlap(PhysicsObject& obj1, PhysicsObject& obj2){
 
     obj1.resetSpeed(obj1.getVelocity() - normal*(impulse/obj1.getMass()));
     obj2.resetSpeed(obj2.getVelocity() + normal*(impulse/obj2.getMass()));
-
-
-    // calculate acceleration change
-    DirVector temp_acc = obj1.getAcceleration();
-    obj1.applyForce(obj2.getAcceleration());
-    obj2.applyForce(temp_acc);
 }
