@@ -17,5 +17,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
+
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 3.0.2      
+)
+FetchContent_MakeAvailable(SFML)
+
 add_subdirectory(src)
 add_subdirectory(tests)
