@@ -46,3 +46,6 @@ build/
 
 # vs code files
 .vscode/
+
+# log files
+logs.txt

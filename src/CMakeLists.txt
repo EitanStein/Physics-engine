@@ -10,4 +10,5 @@ target_include_directories(Physics-Engine
     ${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
 
+add_subdirectory(logging)
 add_subdirectory(visualization)

@@ -25,5 +25,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.16.0 
+)
+FetchContent_MakeAvailable(spdlog)
+
 add_subdirectory(src)
 add_subdirectory(tests)
