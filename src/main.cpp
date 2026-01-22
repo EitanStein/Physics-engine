@@ -1,5 +1,5 @@
 #include "PhysicsEngine/core/PhysicsObject.hpp"
-#include <iostream>
+#include "PhysicsEngine/logging/log_macros.h"
 
 constexpr double timestep = 0.1;
 
@@ -15,13 +15,13 @@ int main(){
         circle2.update(timestep);
         if(areCirclesOverlapping(circle1, circle2))
         {
-            std::cout << "step " << i << ": colliding\n";
-            std::cout << "pre collision resolve values:\n" << circle1.getVelocity().y << ", " << circle1.getAcceleration().y << '\n' << 
-                            circle2.getVelocity().y << ", " << circle2.getAcceleration().y << '\n';
-
+            LOG_INFO("step {}: colliding", i);
+            LOG_INFO("pre collision resolve values:\n{}, {}\n{}, {}", circle1.getVelocity().y, circle1.getAcceleration().y, circle2.getVelocity().y, circle2.getAcceleration().y);
+            
             resolveCirclesOverlap(circle1, circle2);
-            std::cout << "new values:\n" << circle1.getVelocity().y << ", " << circle1.getAcceleration().y << '\n' << 
-                            circle2.getVelocity().y << ", " << circle2.getAcceleration().y << '\n';
+
+            LOG_INFO("new values:\n{}, {}\n{}, {}", circle1.getVelocity().y, circle1.getAcceleration().y, circle2.getVelocity().y, circle2.getAcceleration().y);
+
         }
             
     }

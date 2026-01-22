@@ -4,6 +4,7 @@ target_link_libraries(Visual-Debug
   PRIVATE
     SFML::Graphics
     SFML::Window
+    logging_module
 
 )
 

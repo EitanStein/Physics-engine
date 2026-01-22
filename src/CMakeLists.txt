@@ -2,7 +2,7 @@ add_executable(Physics-Engine main.cpp)
 
 target_link_libraries(Physics-Engine
   PRIVATE
-
+    logging_module
 )
 
 target_include_directories(Physics-Engine
