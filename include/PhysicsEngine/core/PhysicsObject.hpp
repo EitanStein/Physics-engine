@@ -12,7 +12,7 @@ private:
 public:
     // TODO handle creation of different shapes (factory?)
     // TODO handle starting vel, accelerate
-    PhysicsObject(double radius, Point pos) : body(pos, DirVector(), DirVector(0, -10)) {
+    PhysicsObject(double radius, Point pos, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION) : body(pos, DirVector(), DirVector(0, -10), mass, restitution) {
         shape = std::make_unique<Circle>(radius);
     }
 
@@ -50,7 +50,6 @@ void resolveCirclesOverlap(PhysicsObject& obj1, PhysicsObject& obj2){
     Body& body2 = obj2.getBody();
 
     // calculate speed impulse change
-    double restitution_coeff = std::min(body1.getRestitution(), body2.getRestitution());
     DirVector relative_velocity = body2.getVelocity() - body1.getVelocity();
     DirVector normal = calcCircleCollisionNormal(obj1, obj2);
 
@@ -61,6 +60,9 @@ void resolveCirclesOverlap(PhysicsObject& obj1, PhysicsObject& obj2){
         std::cout << "In collision resolution but normalized rel velocity sugests they do not collide\n";
         return;
     }
+
+    // TODO  need to handle very low coefficient? if coeff is 0~ the 2 objects will be in permanent collision 
+    double restitution_coeff = calcRestitutionCoefficient(body1, body2);
 
     double impulse = -(1 + restitution_coeff) * normal_of_rel_velocity / (1/body1.getMass() + 1/body2.getMass());
 
