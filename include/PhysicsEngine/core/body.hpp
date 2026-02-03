@@ -2,7 +2,10 @@
 
 #include "point.hpp"
 
-// TODO change class name form body
+const double DEFAULT_MASS = 1;
+const double DEFAULT_RESTITUTION = 0.8;
+
+// TODO change class name from body
 class Body{
 private:
     Point position;
@@ -12,10 +15,8 @@ private:
     double mass;
     double restitution;
 public:
-    Body(Point pos, DirVector starting_v, DirVector starting_a) : position(pos), velocity(starting_v), acceleration(starting_a) { 
-        // TODO give non-const values
-        mass = 1;
-        restitution = 0.8;
+    Body(Point pos, DirVector starting_vel, DirVector starting_acc, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION) 
+        : position(pos), velocity(starting_vel), acceleration(starting_acc), mass(mass), restitution(restitution) { 
     }
     void update(double time_step) {
         // TODO reduce object creations here
@@ -34,3 +35,8 @@ public:
     double getMass() const {return mass;}
     double getRestitution() const {return restitution;}
 };
+
+
+double calcRestitutionCoefficient(const Body& body1, const Body& body2){
+    return (body1.getRestitution()/2 + body2.getRestitution()/2);
+}

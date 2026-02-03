@@ -18,8 +18,8 @@ struct CircleRenderer{
     }
 };
 
-PhysicsObject createCircle(double rad, Point pos, DirVector spd){
-    PhysicsObject circle(rad, pos);
+PhysicsObject createCircle(double rad, Point pos, DirVector spd, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION){
+    PhysicsObject circle(rad, pos, mass, restitution);
     Body& body = circle.getBody();
     body.resetSpeed(spd);
     body.applyForce(DirVector(0, 10));
