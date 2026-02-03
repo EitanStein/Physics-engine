@@ -37,13 +37,13 @@ struct ScenarioCircleOfCircles : public Scenario{
 
     void Update(double time_step) override{
         for(auto& circle: circles)
-            circle.update(time_step);
+            circle.getBody().update(time_step);
         
-        for(auto& circle: circles){
-            for(auto& other_circle: circles){
-                // is same circle
-                if(circle.getPos() == other_circle.getPos() && circle.getVelocity() == other_circle.getVelocity())
-                    continue;
+        for(int i=0; i< circles.size()-1 ; ++i){
+            PhysicsObject& circle = circles[i];
+            for(int j=i+1 ; j < circles.size() ; ++j){
+                PhysicsObject& other_circle = circles[j];
+
 
                 if(areCirclesOverlapping(circle, other_circle))
                     resolveCirclesOverlap(circle, other_circle);

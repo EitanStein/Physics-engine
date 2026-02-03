@@ -17,13 +17,13 @@ TEST_CASE("acceleration changes are accurate", "[Physics][Movement]"){
 }
 
 TEST_CASE("Apply force is working", "[Physics][Movement]"){
-    PhysicsObject object(3, Point(0, 5));
-    object.update(1);
-    REQUIRE(object.getPos() == Point(0, 0));
+    Body test_body(Point(0,5), DirVector(0,0), DirVector(0,-10));
+    test_body.update(1);
+    REQUIRE(test_body.getPosition() == Point(0, 0));
 
-    object.applyForce(DirVector(0, 20));
-    object.update(1);
-    REQUIRE(object.getPos() == Point(0, -5));
+    test_body.applyForce(DirVector(0, 20));
+    test_body.update(1);
+    REQUIRE(test_body.getPosition() == Point(0, -5));
 }
 
 

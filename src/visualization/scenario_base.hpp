@@ -7,20 +7,22 @@ struct CircleRenderer{
     PhysicsObject& circle;
     sf::CircleShape draw_cricle;
 
-    CircleRenderer(PhysicsObject& circle, sf::Color color) : circle(circle), draw_cricle(circle.getRadius()) {
+    CircleRenderer(PhysicsObject& circle, sf::Color color) : circle(circle), draw_cricle(static_cast<Circle*>(circle.getShape())->getRadius()) {
         draw_cricle.setFillColor(color);
     }
 
     void Draw(sf::RenderWindow& window){
-        draw_cricle.setPosition(sf::Vector2f(circle.getPos().x, circle.getPos().y));
+        const Body& body = circle.getBody();
+        draw_cricle.setPosition(sf::Vector2f(body.getPosition().x, body.getPosition().y));
         window.draw(draw_cricle);
     }
 };
 
 PhysicsObject createCircle(double rad, Point pos, DirVector spd){
     PhysicsObject circle(rad, pos);
-    circle.resetSpeed(spd);
-    circle.applyForce(DirVector(0, 10));
+    Body& body = circle.getBody();
+    body.resetSpeed(spd);
+    body.applyForce(DirVector(0, 10));
     return circle;
 }
 
