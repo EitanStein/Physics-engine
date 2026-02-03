@@ -16,8 +16,8 @@ struct CustomScenario : public Scenario{
     }
 
     void Update(double time_step) override{
-        circle1.update(time_step);
-        circle2.update(time_step);
+        circle1.getBody().update(time_step);
+        circle2.getBody().update(time_step);
 
         if(areCirclesOverlapping(circle1, circle2))
             resolveCirclesOverlap(circle1, circle2);
