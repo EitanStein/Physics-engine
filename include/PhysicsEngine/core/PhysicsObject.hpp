@@ -2,6 +2,7 @@
 
 #include "shape.hpp"
 #include "body.hpp"
+#include "PhysicsEngine/logging/log_macros.hpp"
 #include <memory>
 #include <iostream>
 
@@ -55,8 +56,7 @@ void resolveCirclesOverlap(PhysicsObject& obj1, PhysicsObject& obj2){
     double normal_of_rel_velocity = dotProduct(relative_velocity, normal);
 
     if(normal_of_rel_velocity >= 0){
-        // TODO logging
-        std::cout << "In collision resolution but normalized rel velocity sugests they do not collide\n";
+        LOG_INFO("In collision resolution but normalized rel velocity sugests they do not collide");
         return;
     }
 
