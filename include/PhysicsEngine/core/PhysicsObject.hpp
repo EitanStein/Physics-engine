@@ -11,8 +11,7 @@ private:
     Body body;
 public:
     // TODO handle creation of different shapes (factory?)
-    // TODO handle starting vel, accelerate
-    PhysicsObject(double radius, Point pos, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION) : body(pos, DirVector(), DirVector(0, -10), mass, restitution) {
+    PhysicsObject(double radius, const BodyConfig& body_vars) : body(body_vars) {
         shape = std::make_unique<Circle>(radius);
     }
 

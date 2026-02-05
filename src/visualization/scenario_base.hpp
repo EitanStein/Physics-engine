@@ -13,16 +13,15 @@ struct CircleRenderer{
 
     void Draw(sf::RenderWindow& window){
         const Body& body = circle.getBody();
-        draw_cricle.setPosition(sf::Vector2f(body.getPosition().x, body.getPosition().y));
+        const Point& pos = body.getPosition();
+        draw_cricle.setPosition(sf::Vector2f(pos.x, pos.y));
         window.draw(draw_cricle);
     }
 };
 
-PhysicsObject createCircle(double rad, Point pos, DirVector spd, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION){
-    PhysicsObject circle(rad, pos, mass, restitution);
+PhysicsObject createCircle(double rad, const BodyConfig& body_config){
+    PhysicsObject circle(rad, body_config);
     Body& body = circle.getBody();
-    body.resetSpeed(spd);
-    body.applyForce(DirVector(0, 10));
     return circle;
 }
 
