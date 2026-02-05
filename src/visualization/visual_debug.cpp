@@ -1,6 +1,6 @@
 #include "scenario_custom.hpp"
 #include "scenario_circle_of_circles.hpp"
-#include "PhysicsEngine/logging/log_macros.h"
+#include "PhysicsEngine/logging/log_macros.hpp"
 #include <memory>
 
 int main(){

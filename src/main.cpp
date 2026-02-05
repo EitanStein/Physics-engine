@@ -1,5 +1,5 @@
 #include "PhysicsEngine/core/PhysicsObject.hpp"
-#include "PhysicsEngine/logging/log_macros.h"
+#include "PhysicsEngine/logging/log_macros.hpp"
 
 constexpr double timestep = 0.1;
 
