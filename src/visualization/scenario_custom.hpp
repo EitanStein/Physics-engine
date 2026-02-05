@@ -9,8 +9,8 @@ struct CustomScenario : public Scenario{
 
     CircleRenderer c1;
     CircleRenderer c2;
-    CustomScenario() : circle1(createCircle(10, Point(300, 300), DirVector(50, -10), 10 , 0.5)),
-                    circle2(createCircle(10, Point(500, 300), DirVector(-50, -10), 1, 0.2)),
+    CustomScenario() : circle1(createCircle(10, BodyConfig(Point(300, 300), DirVector(50, -10), DirVector(0, 0), 10 , 0.5))),
+                    circle2(createCircle(10, BodyConfig(Point(500, 300), DirVector(-50, -10), DirVector(0, 0), 1, 0.2))),
                     c1(circle1, sf::Color::Blue),
                     c2(circle2, sf::Color::Green) {
     }

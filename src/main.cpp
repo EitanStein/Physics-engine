@@ -4,13 +4,11 @@
 constexpr double timestep = 0.1;
 
 int main(){
-    PhysicsObject circle1(5, Point(0, 10));
-    PhysicsObject circle2(5, Point(0, -10));
+    PhysicsObject circle1(5, BodyConfig(Point(0, 10), DirVector(0, 0), DirVector(0, -10)));
+    PhysicsObject circle2(5, BodyConfig(Point(0, 10), DirVector(0, 0), DirVector(0, 10)));
 
     Body& body1 = circle1.getBody();
     Body& body2 = circle2.getBody();
-
-    body2.applyForce(DirVector(0,20));
     
     std::cout << "start:\n";
     int repeats = 100;

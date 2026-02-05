@@ -5,7 +5,25 @@
 const double DEFAULT_MASS = 1;
 const double DEFAULT_RESTITUTION = 0.8;
 
-// TODO change class name from body
+
+struct BodyConfig{
+    Point position = Point(0,0);
+    DirVector velocity = DirVector(0,0);
+    DirVector acceleration = DirVector(0,0);
+
+    double mass = DEFAULT_MASS;
+    double restitution = DEFAULT_RESTITUTION;
+
+    BodyConfig() {}
+    BodyConfig(Point position, DirVector velocity, DirVector acceleration, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION) :
+        position(position), velocity(velocity), acceleration(acceleration), mass(mass), restitution(restitution) {}
+
+    BodyConfig(const BodyConfig& other) = default;
+
+    BodyConfig(BodyConfig&& other) = default;
+};
+
+
 class Body{
 private:
     Point position;
@@ -15,8 +33,9 @@ private:
     double mass;
     double restitution;
 public:
-    Body(Point pos, DirVector starting_vel, DirVector starting_acc, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION) 
-        : position(pos), velocity(starting_vel), acceleration(starting_acc), mass(mass), restitution(restitution) { 
+    Body(const BodyConfig& body_vars) 
+        : position(body_vars.position), velocity(body_vars.velocity), acceleration(body_vars.acceleration),
+         mass(body_vars.mass), restitution(body_vars.restitution) { 
     }
     void update(double time_step) {
         // TODO reduce object creations here

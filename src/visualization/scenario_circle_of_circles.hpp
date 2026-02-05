@@ -15,11 +15,14 @@ struct ScenarioCircleOfCircles : public Scenario{
         double deg = 360/num_circles;
 
         Point prev_circle(-1, 0);
+
+        BodyConfig circle_body_config;
     
         for(int i = 0; i < num_circles ; ++i){
 
-            Point new_circle_center = prev_circle*main_circle_rad + center;
-            circles.push_back(createCircle(rad, new_circle_center, center-new_circle_center));
+            circle_body_config.position = prev_circle*main_circle_rad + center;
+            circle_body_config.velocity = center-circle_body_config.position;
+            circles.push_back(createCircle(rad, circle_body_config));
 
             double color = (i+1)*255/num_circles;
             circles_drawers.emplace_back(circles.back(), sf::Color(color, color, color));
