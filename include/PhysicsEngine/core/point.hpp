@@ -24,10 +24,10 @@ struct Point{
 
 typedef Point DirVector;
 
-double dist(const Point& p1, const Point& p2){ 
+inline double dist(const Point& p1, const Point& p2){ 
     return std::sqrt(std::pow(p1.x  - p2.x, 2) + std::pow(p1.y  - p2.y, 2));
 }
 
-double dotProduct(const Point& p1, const Point& p2){
+inline double dotProduct(const Point& p1, const Point& p2){
     return p1.x * p2.x + p1.y * p2.y;
 }
