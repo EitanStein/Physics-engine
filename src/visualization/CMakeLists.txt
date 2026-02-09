@@ -5,6 +5,7 @@ target_link_libraries(Visual-Debug
     SFML::Graphics
     SFML::Window
     logging_module
+    physics_module
 
 )
 

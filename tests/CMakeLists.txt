@@ -5,6 +5,7 @@ target_link_libraries(Testing
   PRIVATE
     logging_module
     Catch2::Catch2WithMain
+    physics_module
 )
 
 target_include_directories(Testing

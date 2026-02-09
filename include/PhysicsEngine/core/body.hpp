@@ -56,6 +56,6 @@ public:
 };
 
 
-double calcRestitutionCoefficient(const Body& body1, const Body& body2){
+inline double calcRestitutionCoefficient(const Body& body1, const Body& body2){
     return (body1.getRestitution()/2 + body2.getRestitution()/2);
 }

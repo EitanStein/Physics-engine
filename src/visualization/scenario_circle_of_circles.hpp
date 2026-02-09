@@ -48,8 +48,8 @@ struct ScenarioCircleOfCircles : public Scenario{
                 PhysicsObject& other_circle = circles[j];
 
 
-                if(areCirclesOverlapping(circle, other_circle))
-                    resolveCirclesOverlap(circle, other_circle);
+                if(areOverlapping(circle, other_circle))
+                    resolveOverlap(circle, other_circle);
             }
         }
     }
