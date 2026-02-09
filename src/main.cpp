@@ -15,12 +15,12 @@ int main(){
     for(int i = 0 ; i < repeats ; ++i){
         body1.update(timestep);
         body2.update(timestep);
-        if(areCirclesOverlapping(circle1, circle2))
+        if(areOverlapping(circle1, circle2))
         {
             LOG_INFO("step {}: colliding", i);
             LOG_INFO("pre collision resolve values:\n{}, {}\n{}, {}", body1.getVelocity().y, body1.getAcceleration().y, body2.getVelocity().y, body2.getAcceleration().y);
             
-            resolveCirclesOverlap(circle1, circle2);
+            resolveOverlap(circle1, circle2);
 
             LOG_INFO("new values:\n{}, {}\n{}, {}", body1.getVelocity().y, body1.getAcceleration().y, body2.getVelocity().y, body2.getAcceleration().y);
 

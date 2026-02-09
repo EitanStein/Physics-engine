@@ -33,11 +33,11 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
     PhysicsObject object1(3, config);
     config.position = Point(5, 5);
     PhysicsObject object2(5, config);
-    REQUIRE(areCirclesOverlapping(object1, object2));
+    REQUIRE(areOverlapping(object1, object2));
 
     config.position = Point(0, 5);
     PhysicsObject object3(1, config);
     config.position = Point(5, 5);
     PhysicsObject object4(1, config);
-    REQUIRE(!areCirclesOverlapping(object3, object4));
+    REQUIRE(!areOverlapping(object3, object4));
 }
