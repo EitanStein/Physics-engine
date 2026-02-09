@@ -18,7 +18,9 @@ public:
 
     Body& getBody() {return body;}
     const Body& getBody() const {return body;}
-    Shape* getShape() const {return shape.get();}
+    
+    Shape& getShape() {return *shape;}
+    const Shape& getShape() const {return *shape;}
 };
 
 
@@ -26,14 +28,14 @@ public:
 // TODO potantially change to 'willCollide in upcoming time step'
 bool areCirclesOverlapping(const PhysicsObject& obj1, const PhysicsObject& obj2){
     const Body& body1 = obj1.getBody();
-    Circle* circle1 = static_cast<Circle*>(obj1.getShape());
+    const Circle& circle1 = static_cast<const Circle&>(obj1.getShape());
     
     const Body& body2 = obj2.getBody();
-    Circle* circle2 = static_cast<Circle*>(obj2.getShape());
+    const Circle& circle2 = static_cast<const Circle&>(obj2.getShape());
 
     double origin_dist = dist(body1.getPosition(), body2.getPosition());
     // TODO tangent circles considered overlap or not
-    if(origin_dist <= circle1->getRadius() + circle2->getRadius())
+    if(origin_dist <= circle1.getRadius() + circle2.getRadius())
         return true;
     
     return false;

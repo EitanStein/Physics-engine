@@ -7,7 +7,7 @@ struct CircleRenderer{
     PhysicsObject& circle;
     sf::CircleShape draw_cricle;
 
-    CircleRenderer(PhysicsObject& circle, sf::Color color) : circle(circle), draw_cricle(static_cast<Circle*>(circle.getShape())->getRadius()) {
+    CircleRenderer(PhysicsObject& circle, sf::Color color) : circle(circle), draw_cricle(static_cast<const Circle&>(circle.getShape()).getRadius()) {
         draw_cricle.setFillColor(color);
     }
 
