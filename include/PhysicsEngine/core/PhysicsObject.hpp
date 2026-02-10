@@ -1,11 +1,10 @@
 #pragma once
 
-#include "shapes/all_shapes.hpp"
+#include "shapes/shape_factory.hpp"
 #include "body.hpp"
 #include "collision/detect.hpp"
 #include "collision/resolve.hpp"
 #include "PhysicsEngine/logging/log_macros.hpp"
-#include <memory>
 #include <iostream>
 
 class PhysicsObject {
@@ -13,10 +12,7 @@ private:
     std::unique_ptr<Shape> shape;
     Body body;
 public:
-    // TODO handle creation of different shapes (factory?)
-    PhysicsObject(double radius, const BodyConfig& body_vars) : body(body_vars) {
-        shape = std::make_unique<Circle>(radius);
-    }
+    PhysicsObject(std::unique_ptr<Shape> p_shape, const BodyConfig& body_vars) : shape(std::move(p_shape)), body(body_vars) {}
 
     Body& getBody() {return body;}
     const Body& getBody() const {return body;}

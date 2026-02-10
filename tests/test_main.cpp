@@ -30,14 +30,14 @@ TEST_CASE("Apply force is working", "[Physics][Movement]"){
 TEST_CASE("Basic collision check", "[Physics][Collision]"){
     BodyConfig config;
     config.position = Point(0, 5);
-    PhysicsObject object1(3, config);
+    PhysicsObject object1(std::move(ShapeFactory::createCircle(3)), config);
     config.position = Point(5, 5);
-    PhysicsObject object2(5, config);
+    PhysicsObject object2(std::move(ShapeFactory::createCircle(5)), config);
     REQUIRE(areOverlapping(object1, object2));
 
     config.position = Point(0, 5);
-    PhysicsObject object3(1, config);
+    PhysicsObject object3(std::move(ShapeFactory::createCircle(1)), config);
     config.position = Point(5, 5);
-    PhysicsObject object4(1, config);
+    PhysicsObject object4(std::move(ShapeFactory::createCircle(1)), config);
     REQUIRE(!areOverlapping(object3, object4));
 }
