@@ -4,8 +4,6 @@
 #include "body.hpp"
 #include "collision/detect.hpp"
 #include "collision/resolve.hpp"
-#include "PhysicsEngine/logging/log_macros.hpp"
-#include <iostream>
 
 class PhysicsObject {
 private:
