@@ -10,7 +10,6 @@ int main(){
     Body& body1 = circle1.getBody();
     Body& body2 = circle2.getBody();
     
-    std::cout << "start:\n";
     int repeats = 100;
     for(int i = 0 ; i < repeats ; ++i){
         body1.update(timestep);
