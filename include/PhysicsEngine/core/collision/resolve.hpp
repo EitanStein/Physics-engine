@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../body.hpp"
-#include "../shape.hpp"
+#include "PhysicsEngine/core/shapes/all_shapes.hpp"
 
 namespace Collision{
     namespace Resolve{

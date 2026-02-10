@@ -20,7 +20,7 @@ struct CircleRenderer{
 };
 
 PhysicsObject createCircle(double rad, const BodyConfig& body_config){
-    PhysicsObject circle(rad, body_config);
+    PhysicsObject circle(std::move(ShapeFactory::createCircle(rad)), body_config);
     Body& body = circle.getBody();
     return circle;
 }
