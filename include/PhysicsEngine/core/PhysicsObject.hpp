@@ -2,8 +2,7 @@
 
 #include "shapes/shape_factory.hpp"
 #include "body.hpp"
-#include "collision/detect.hpp"
-#include "collision/resolve.hpp"
+#include "collision/dispatch.hpp"
 
 class PhysicsObject {
 private:
@@ -21,19 +20,23 @@ public:
 
 
 inline bool areOverlapping(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
-    return Collision::Detect::circleCircle(static_cast<const Circle&>(shape1), pos1, 
-                                            static_cast<const Circle&>(shape2), pos2);
+    Collision::DetectFunc detect_func = Collision::getDetectFunc(shape1.type(), shape2.type());
+    return detect_func(shape1, pos1, shape2, pos2);
 }
 
 inline bool areOverlapping(const PhysicsObject& obj1, const PhysicsObject& obj2){
     return areOverlapping(obj1.getShape(), obj1.getBody().getPosition(),
-                            obj2.getShape(), obj2.getBody().getPosition());
+                        obj2.getShape(), obj2.getBody().getPosition());
 }
 
 
 
 
 inline void resolveOverlap(PhysicsObject& obj1, PhysicsObject& obj2){
-    Collision::Resolve::circleCircle(static_cast<const Circle&>(obj1.getShape()), obj1.getBody(),
-                                    static_cast<const Circle&>(obj2.getShape()), obj2.getBody());
+    const Shape& shape1 = obj1.getShape();
+    const Shape& shape2 = obj2.getShape();
+
+    Collision::ResolveFunc resolve_func = Collision::getResolveFunc(shape1.type(), shape2.type());
+    resolve_func(shape1, obj1.getBody(),
+                shape2, obj2.getBody());
 }
