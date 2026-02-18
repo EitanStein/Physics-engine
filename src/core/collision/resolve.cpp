@@ -10,7 +10,7 @@ namespace Collision{
     }
 
     namespace Resolve{
-        void circleCircle(const Circle& circle1, Body& body1, const Circle& circle2, Body& body2){
+        void circleCircle(const Shape& circle1, Body& body1, const Shape& circle2, Body& body2){
             // calculate speed impulse change
             DirVector relative_velocity = body2.getVelocity() - body1.getVelocity();
             DirVector normal = Collision::Normal::circleCircle(body1.getPosition(), body2.getPosition());

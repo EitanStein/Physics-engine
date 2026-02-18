@@ -5,6 +5,6 @@
 
 namespace Collision{
     namespace Resolve{
-        void circleCircle(const Circle& circle1, Body& body1, const Circle& circle2, Body& body2);
+        void circleCircle(const Shape& circle1, Body& body1, const Shape& circle2, Body& body2);
     }
 }

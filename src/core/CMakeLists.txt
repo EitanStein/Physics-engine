@@ -1,4 +1,4 @@
-add_library(physics_module collision/detect.cpp collision/resolve.cpp)
+add_library(physics_module collision/detect.cpp collision/resolve.cpp collision/dispatch.cpp)
 
 target_link_libraries(physics_module
   PRIVATE
