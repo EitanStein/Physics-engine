@@ -1,6 +1,7 @@
 #pragma once
 
 #include "point.hpp"
+#include "PhysicsEngine/logging/log_macros.hpp"
 
 const double DEFAULT_MASS = 1;
 const double DEFAULT_RESTITUTION = 0.8;
@@ -47,11 +48,22 @@ public:
 
     void applyForce(const DirVector& direction) {acceleration += direction;}
     void resetSpeed(const DirVector& direction) {velocity = direction;}
+    void movePos(const DirVector& distance) {position += distance;}
 
     const Point& getPosition() const {return position;}
     const DirVector& getVelocity() const {return velocity;}
     const DirVector& getAcceleration() const {return acceleration;}
     double getMass() const {return mass;}
+    double getInverseMass() const {
+        // TODO different handle of 0 mass objects
+        if(mass == 0){
+            LOG_ERROR("Can't calculate inverse mass of 0 mass");
+            return 1/0.001;
+        }
+        // TODO handle immovale objects (return 0)
+
+        return 1/mass;
+    } 
     double getRestitution() const {return restitution;}
 };
 

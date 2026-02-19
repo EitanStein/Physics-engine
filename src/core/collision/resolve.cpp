@@ -9,11 +9,15 @@ namespace Collision{
         }
     }
 
+    namespace Penetration{
+        double circleCircle(const Circle& circle1, const Body& body1, const Circle& circle2, const Body& body2){
+            return circle1.getRadius() + circle2.getRadius() - dist(body1.getPosition(), body2.getPosition());
+        }
+    }
+
     namespace Resolve{
-        void circleCircle(const Shape& circle1, Body& body1, const Shape& circle2, Body& body2){
-            // calculate speed impulse change
+        void updateImpulseSpeed(Body& body1, Body& body2, const DirVector& normal){
             DirVector relative_velocity = body2.getVelocity() - body1.getVelocity();
-            DirVector normal = Collision::Normal::circleCircle(body1.getPosition(), body2.getPosition());
 
             double normal_of_rel_velocity = dotProduct(relative_velocity, normal);
 
@@ -29,6 +33,28 @@ namespace Collision{
 
             body1.resetSpeed(body1.getVelocity() - normal*(impulse/body1.getMass()));
             body2.resetSpeed(body2.getVelocity() + normal*(impulse/body2.getMass()));
+        }
+
+        // TODO change penetration name (a float that represents how much the ob jects overlap)
+        void correctPosition(Body& body1, Body& body2, const DirVector& normal, double penetration){
+            double body1_inv_mass = body1.getInverseMass();
+            double body2_inv_mass = body2.getInverseMass();
+
+            DirVector partial_correction = normal * penetration / (body1_inv_mass + body2_inv_mass);
+
+            body1.movePos(partial_correction * (-body1_inv_mass));
+            body2.movePos(partial_correction * body2_inv_mass);
+
+        }
+
+        void circleCircle(const Shape& circle1, Body& body1, const Shape& circle2, Body& body2){
+            // calculate speed impulse change
+            DirVector normal = Collision::Normal::circleCircle(body1.getPosition(), body2.getPosition());
+            double penetration = Collision::Penetration::circleCircle(static_cast<const Circle&>(circle1), body1, 
+                                                                        static_cast<const Circle&>(circle2), body2);
+
+            correctPosition(body1, body2, normal, penetration);
+            updateImpulseSpeed(body1, body2, normal);
         }
     }
 }
