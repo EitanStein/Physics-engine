@@ -9,6 +9,12 @@ namespace Collision{
         }
     }
 
+    namespace Penetration{
+        double circleCircle(const Circle& circle1, const Body& body1, const Circle& circle2, const Body& body2){
+            return circle1.getRadius() + circle2.getRadius() - dist(body1.getPosition(), body2.getPosition());
+        }
+    }
+
     namespace Resolve{
         void circleCircle(const Shape& circle1, Body& body1, const Shape& circle2, Body& body2){
             // calculate speed impulse change
