@@ -8,5 +8,9 @@
 namespace Collision{
     namespace Detect{
         bool circleCircle(const Shape& circle1, const Point& pos1, const Shape& circle2, const Point& pos2);
+        bool circleRect(const Shape& circle, const Point& pos1, const Shape& rect, const Point& pos2);
+
+        bool rectCircle(const Shape& rect, const Point& pos1, const Shape& circle, const Point& pos2);
+        bool rectRect(const Shape& rect1, const Point& pos1, const Shape& rect2, const Point& pos2);
     }
 }

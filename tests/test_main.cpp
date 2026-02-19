@@ -1,5 +1,8 @@
 #include <catch2/catch_all.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include "PhysicsEngine/core/collision/dispatch.hpp"
+#include "PhysicsEngine/core/collision/detect.hpp"
+#include "PhysicsEngine/core/collision/resolve.hpp"
 
 #include "PhysicsEngine/core/PhysicsObject.hpp"
 
@@ -24,6 +27,27 @@ TEST_CASE("Apply force is working", "[Physics][Movement]"){
     test_body.applyForce(DirVector(0, 20));
     test_body.update(1);
     REQUIRE(test_body.getPosition() == Point(0, -5));
+}
+
+
+TEST_CASE("Collision dispatch detect check", "[Collision][Dispatch]"){
+    // circle collisions
+    REQUIRE(Collision::Detect::circleCircle == Collision::getDetectFunc(ShapeT::Type::Circle, ShapeT::Type::Circle));
+    REQUIRE(Collision::Detect::circleRect == Collision::getDetectFunc(ShapeT::Type::Circle, ShapeT::Type::Rectangle));
+
+    // rectangle collisions 
+    REQUIRE(Collision::Detect::rectCircle == Collision::getDetectFunc(ShapeT::Type::Rectangle, ShapeT::Type::Circle));
+    REQUIRE(Collision::Detect::rectRect == Collision::getDetectFunc(ShapeT::Type::Rectangle, ShapeT::Type::Rectangle));
+}
+
+TEST_CASE("Collision dispatch resolve check", "[Collision][Dispatch]"){
+    // circle collisions
+    REQUIRE(Collision::Resolve::circleCircle == Collision::getResolveFunc(ShapeT::Type::Circle, ShapeT::Type::Circle));
+    REQUIRE(Collision::Resolve::circleRect == Collision::getResolveFunc(ShapeT::Type::Circle, ShapeT::Type::Rectangle));
+
+    // rectangle collisions 
+    REQUIRE(Collision::Resolve::rectCircle == Collision::getResolveFunc(ShapeT::Type::Rectangle, ShapeT::Type::Circle));
+    REQUIRE(Collision::Resolve::rectRect == Collision::getResolveFunc(ShapeT::Type::Rectangle, ShapeT::Type::Rectangle));
 }
 
 

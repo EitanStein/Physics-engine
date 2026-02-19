@@ -47,6 +47,7 @@ namespace Collision{
 
         }
 
+        // circle collisions
         void circleCircle(const Shape& circle1, Body& body1, const Shape& circle2, Body& body2){
             // calculate speed impulse change
             DirVector normal = Collision::Normal::circleCircle(body1.getPosition(), body2.getPosition());
@@ -56,5 +57,20 @@ namespace Collision{
             correctPosition(body1, body2, normal, penetration);
             updateImpulseSpeed(body1, body2, normal);
         }
+
+        void circleRect(const Shape& circle, Body& body1, const Shape& rect, Body& body2){
+            // TODO
+        }
+
+        // rectangle collisions
+        void rectCircle(const Shape& rect, Body& body1, const Shape& circle, Body& body2){
+            circleRect(circle, body2, rect, body1);
+        }
+
+        void rectRect(const Shape& rect1, Body& body1, const Shape& rect2, Body& body2){
+            // TODO
+        }
+
+
     }
 }
