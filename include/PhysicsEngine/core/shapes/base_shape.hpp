@@ -5,7 +5,7 @@
 // TODO merge all shape related stuff under one namespace?
 // change namespace name
 namespace ShapeT{
-    enum class Type{Circle, NumTypes};
+    enum class Type{Circle, Rectangle, NumTypes};
     constexpr size_t NUM_SHAPES = static_cast<size_t>(Type::NumTypes);
 
     inline bool isValidType(Type shape){
