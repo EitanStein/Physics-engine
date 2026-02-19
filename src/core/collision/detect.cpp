@@ -16,7 +16,16 @@ namespace Collision{
         }
 
         bool circleRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
-            // TODO
+            const Circle& circle = static_cast<const Circle&>(shape1);
+            const Rectangle& rect = static_cast<const Rectangle&>(shape2);
+
+            // TODO tangect considered overlap?
+            if((abs(pos1.x-pos2.x) <= circle.getRadius() + rect.getWidth()/2) && 
+                (abs(pos1.y-pos2.y) <= circle.getRadius() + rect.getHeight()/2))
+            {
+                return true;
+            }
+                
             return false;
         }
 
@@ -26,7 +35,16 @@ namespace Collision{
         }
 
         bool rectRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
-            // TODO
+            const Rectangle& rect1 = static_cast<const Rectangle&>(shape1);
+            const Rectangle& rect2 = static_cast<const Rectangle&>(shape2);
+
+            // TODO tangect considered overlap?
+            if((2*abs(pos1.x-pos2.x) <= rect1.getWidth() + rect2.getWidth()) && 
+                (2*abs(pos1.y-pos2.y) <= rect1.getHeight() + rect2.getHeight()))
+            {
+                return true;
+            }
+
             return false;
         }
     }
