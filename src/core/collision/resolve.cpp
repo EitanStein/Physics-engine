@@ -1,5 +1,6 @@
 #include "PhysicsEngine/core/collision/resolve.hpp"
 #include "PhysicsEngine/logging/log_macros.hpp"
+#include <cmath>
 
 namespace Collision{
     // TODO merge normal and penetretaion into collision info during detection
@@ -11,8 +12,8 @@ namespace Collision{
 
         DirVector circleRect(const Circle& circle, const Point& pos1, const Rectangle& rect, const Point& pos2){
             
-            double x_diff = circle.getRadius() + rect.getWidth()/2 - abs(pos2.x - pos1.x);
-            double y_diff = circle.getRadius() + rect.getHeight()/2 - abs(pos2.y - pos1.y);
+            double x_diff = circle.getRadius() + rect.getWidth()/2 - std::abs(pos2.x - pos1.x);
+            double y_diff = circle.getRadius() + rect.getHeight()/2 - std::abs(pos2.y - pos1.y);
             // TODO need to also do (-1, 0) (0, -1) normals?
             if(x_diff > y_diff)
                 return DirVector(0,1);
@@ -25,8 +26,8 @@ namespace Collision{
         }
 
         DirVector rectRect(const Rectangle& rect1, const Point& pos1, const Rectangle& rect2, const Point& pos2){
-            double x_diff = rect1.getWidth() + rect2.getWidth() - abs(pos2.x - pos1.x)*2;
-            double y_diff = rect1.getHeight() + rect2.getHeight() - abs(pos2.y - pos1.y)*2;
+            double x_diff = rect1.getWidth() + rect2.getWidth() - std::abs(pos2.x - pos1.x)*2;
+            double y_diff = rect1.getHeight() + rect2.getHeight() - std::abs(pos2.y - pos1.y)*2;
 
             if(x_diff > y_diff){
                 if(pos2.y > pos1.y)
@@ -52,26 +53,26 @@ namespace Collision{
         }
 
         double circleRect(const Circle& circle, const Point& pos1, const Rectangle& rect, const Point& pos2){
-            double x_diff = circle.getRadius() + rect.getWidth()/2 - abs(pos2.x - pos1.x);
-            double y_diff = circle.getRadius() + rect.getHeight()/2 - abs(pos2.y - pos1.y);
+            double x_diff = circle.getRadius() + rect.getWidth()/2 - std::abs(pos2.x - pos1.x);
+            double y_diff = circle.getRadius() + rect.getHeight()/2 - std::abs(pos2.y - pos1.y);
             
             if(x_diff > y_diff)
-                return x_diff;
-            else if(x_diff <= y_diff)
                 return y_diff;
+            else if(x_diff < y_diff)
+                return x_diff;
 
             double rect_cornser_dist = std::sqrt(std::pow(rect.getWidth(), 2) + std::pow(rect.getHeight(), 2)) / 2; 
             return circle.getRadius() + rect_cornser_dist - dist(pos1, pos2);
         }
 
         double rectRect(const Rectangle& rect1, const Point& pos1, const Rectangle& rect2, const Point& pos2){
-            double x_diff = rect1.getWidth() + rect2.getWidth() - abs(pos2.x - pos1.x)*2;
-            double y_diff = rect1.getHeight() + rect2.getHeight() - abs(pos2.y - pos1.y)*2;
+            double x_diff = rect1.getWidth() + rect2.getWidth() - std::abs(pos2.x - pos1.x)*2;
+            double y_diff = rect1.getHeight() + rect2.getHeight() - std::abs(pos2.y - pos1.y)*2;
             
             if(x_diff > y_diff)
-                return x_diff;
-            else if(x_diff <= y_diff)
                 return y_diff;
+            else if(x_diff < y_diff)
+                return x_diff;
 
             double rect1_cornser_dist = std::sqrt(std::pow(rect1.getWidth(), 2) + std::pow(rect1.getHeight(), 2)) / 2; 
             double rect2_cornser_dist = std::sqrt(std::pow(rect2.getWidth(), 2) + std::pow(rect2.getHeight(), 2)) / 2; 
