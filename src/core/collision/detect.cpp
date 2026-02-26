@@ -4,7 +4,7 @@
 namespace Collision{
     namespace Detect{
         // circle collisions
-        bool circleCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
+        bool circleCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
             const Circle& circle1 = static_cast<const Circle&>(shape1);
             const Circle& circle2 = static_cast<const Circle&>(shape2);
 
@@ -16,7 +16,7 @@ namespace Collision{
             return false;
         }
 
-        bool circleRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
+        bool circleRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
             const Circle& circle = static_cast<const Circle&>(shape1);
             const Rectangle& rect = static_cast<const Rectangle&>(shape2);
 
@@ -31,11 +31,11 @@ namespace Collision{
         }
 
         // rectangle collisions
-        bool rectCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
-            return circleRect(shape2, pos2, shape1, pos1);
+        bool rectCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
+            return circleRect(shape2, pos2, shape1, pos1, info);
         }
 
-        bool rectRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2){
+        bool rectRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
             const Rectangle& rect1 = static_cast<const Rectangle&>(shape1);
             const Rectangle& rect2 = static_cast<const Rectangle&>(shape2);
 

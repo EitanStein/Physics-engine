@@ -113,7 +113,7 @@ namespace Collision{
         }
 
         // circle collisions
-        void circleCircle(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2){
+        void circleCircle(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2, const Info& info){
             const Circle& circle1 = static_cast<const Circle&>(shape1);
             const Circle& circle2 = static_cast<const Circle&>(shape2);
 
@@ -128,7 +128,7 @@ namespace Collision{
             updateImpulseSpeed(body1, body2, normal);
         }
 
-        void circleRect(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2){
+        void circleRect(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2, const Info& info){
             const Circle& circle = static_cast<const Circle&>(shape1);
             const Rectangle& rect = static_cast<const Rectangle&>(shape2);
 
@@ -143,11 +143,11 @@ namespace Collision{
         }
 
         // rectangle collisions
-        void rectCircle(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2){
-            circleRect(shape2, body2, shape1, body1);
+        void rectCircle(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2, const Info& info){
+            circleRect(shape2, body2, shape1, body1, info);
         }
 
-        void rectRect(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2){
+        void rectRect(const Shape& shape1, Body& body1, const Shape& shape2, Body& body2, const Info& info){
             const Rectangle& rect1 = static_cast<const Rectangle&>(shape1);
             const Rectangle& rect2 = static_cast<const Rectangle&>(shape2);
 

@@ -1,12 +1,13 @@
 #pragma once
 
 #include "PhysicsEngine/core/shapes/all_shapes.hpp"
-#include "../body.hpp"
+#include "PhysicsEngine/core/body.hpp"
+#include "info.hpp"
 
 namespace Collision{
 
-    using DetectFunc = bool(*)(const Shape&, const Point&, const Shape&, const Point&);
-    using ResolveFunc = void(*)(const Shape&, Body&, const Shape&, Body&);
+    using DetectFunc = bool(*)(const Shape&, const Point&, const Shape&, const Point&, Info&);
+    using ResolveFunc = void(*)(const Shape&, Body&, const Shape&, Body&, const Info&);
 
     DetectFunc getDetectFunc(ShapeT::Type shape1, ShapeT::Type shape2);
 
