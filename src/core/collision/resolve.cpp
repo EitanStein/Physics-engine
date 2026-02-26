@@ -15,9 +15,9 @@ namespace Collision{
             double y_diff = circle.getRadius() + rect.getHeight()/2 - abs(pos2.y - pos1.y);
             // TODO need to also do (-1, 0) (0, -1) normals?
             if(x_diff > y_diff)
-                return DirVector(1,0);
-            else if(x_diff < y_diff)
                 return DirVector(0,1);
+            else if(x_diff < y_diff)
+                return DirVector(1,0);
             
             Point diff = pos2 - pos1;
             // TODO does this work proerply with a non-square rectangle of different proportions?
@@ -30,14 +30,14 @@ namespace Collision{
 
             if(x_diff > y_diff){
                 if(pos2.y > pos1.y)
-                    return DirVector(1,0);
-                return DirVector(-1,0);
+                    return DirVector(0,1);
+                return DirVector(0,-1);
             }
             else if(x_diff < y_diff)
             {
                 if(pos2.x > pos1.x)
-                    return DirVector(0,1);
-                return DirVector(0,-1);
+                    return DirVector(1,0);
+                return DirVector(-1,0);
             }
             
             Point diff = pos2 - pos1;
