@@ -19,6 +19,30 @@ struct CircleRenderer{
     }
 };
 
+// TODO make generic renderer class
+struct RectRenderer{
+    PhysicsObject& rect;
+    sf::RectangleShape draw_rect;
+
+    RectRenderer(PhysicsObject& rect, sf::Color color) : rect(rect), draw_rect(sf::Vector2f(static_cast<const Rectangle&>(rect.getShape()).getWidth(),
+                                                                                            static_cast<const Rectangle&>(rect.getShape()).getHeight())) {
+        draw_rect.setFillColor(color);
+    }
+
+    void Draw(sf::RenderWindow& window){
+        const Body& body = rect.getBody();
+        const Point& pos = body.getPosition();
+        draw_rect.setPosition(sf::Vector2f(pos.x, pos.y));
+        window.draw(draw_rect);
+    }
+};
+
+PhysicsObject createRect(double width, double height, const BodyConfig& body_config){
+    PhysicsObject rect(std::move(ShapeFactory::createRect(width, height)), body_config);
+    return rect;
+}
+
+
 PhysicsObject createCircle(double rad, const BodyConfig& body_config){
     PhysicsObject circle(std::move(ShapeFactory::createCircle(rad)), body_config);
     Body& body = circle.getBody();

@@ -8,7 +8,13 @@ namespace Collision{
     std::array<std::array<std::pair<DetectFunc, ResolveFunc>, ShapeT::NUM_SHAPES>, ShapeT::NUM_SHAPES> dispatchTable{
         // circle collisions
         std::array<std::pair<DetectFunc, ResolveFunc>, ShapeT::NUM_SHAPES>{
-            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::circleCircle, Collision::Resolve::circleCircle}
+            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::circleCircle, Collision::Resolve::circleCircle},
+            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::circleRect, Collision::Resolve::circleRect}
+        },
+        // rectangle collisions
+        std::array<std::pair<DetectFunc, ResolveFunc>, ShapeT::NUM_SHAPES>{
+            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::rectCircle, Collision::Resolve::rectCircle},
+            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::rectRect, Collision::Resolve::rectRect}
         }
     };
 
