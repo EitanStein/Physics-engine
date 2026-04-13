@@ -5,11 +5,13 @@
 
 int main(){
     sf::RenderWindow window(sf::VideoMode({800, 600}), "debug visualizer");
+    window.setFramerateLimit(60);
 
 
-    double time_step = 0.001;
-    // std::unique_ptr<Scenario> circle_tester = std::make_unique<ScenarioCircleOfCircles>(8, 10);
-    std::unique_ptr<Scenario> circle_tester = std::make_unique<CustomScenario>();
+    const double time_step = 0.016;
+
+    // std::unique_ptr<Scenario> tester = std::make_unique<ScenarioCircleOfCircles>(8, 10);
+    std::unique_ptr<Scenario> tester = std::make_unique<CustomScenario>();
 
 
     while (window.isOpen())
@@ -22,9 +24,8 @@ int main(){
 
         window.clear(sf::Color::Black);
 
-        
-        circle_tester->Draw(window);
-        circle_tester->Update(time_step);
+        tester->update(time_step);
+        tester->draw(window);
 
 
         window.display();
