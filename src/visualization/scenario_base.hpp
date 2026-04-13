@@ -3,6 +3,14 @@
 #include "PhysicsEngine/core/PhysicsObject.hpp"
 
 
+struct Renderer{
+    PhysicsObject& obj;
+    
+    Renderer(PhysicsObject& obj) : obj(obj) {}
+
+    virtual void draw(sf::RenderWindow& window) = 0;
+};
+
 struct CircleRenderer{
     PhysicsObject& circle;
     sf::CircleShape draw_cricle;
