@@ -33,10 +33,5 @@ inline bool areOverlapping(const PhysicsObject& obj1, const PhysicsObject& obj2,
 
 
 inline void resolveOverlap(PhysicsObject& obj1, PhysicsObject& obj2, const Collision::Info& info){
-    const Shape& shape1 = obj1.getShape();
-    const Shape& shape2 = obj2.getShape();
-
-    Collision::ResolveFunc resolve_func = Collision::getResolveFunc(shape1.type(), shape2.type());
-    resolve_func(shape1, obj1.getBody(),
-                shape2, obj2.getBody(), info);
+    Collision::Resolve::resolve(obj1.getBody(), obj2.getBody(), info);
 }

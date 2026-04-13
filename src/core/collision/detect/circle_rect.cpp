@@ -55,7 +55,9 @@ namespace Collision{
         }
 
         bool rectCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
-            return circleRect(shape2, pos2, shape1, pos1, info);
+            bool result = circleRect(shape2, pos2, shape1, pos1, info);
+            info.normal *= - 1;
+            return result;
         }
     }
 }

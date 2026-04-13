@@ -40,16 +40,6 @@ TEST_CASE("Collision dispatch detect check", "[Collision][Dispatch]"){
     REQUIRE(Collision::Detect::rectRect == Collision::getDetectFunc(ShapeT::Type::Rectangle, ShapeT::Type::Rectangle));
 }
 
-TEST_CASE("Collision dispatch resolve check", "[Collision][Dispatch]"){
-    // circle collisions
-    REQUIRE(Collision::Resolve::circleCircle == Collision::getResolveFunc(ShapeT::Type::Circle, ShapeT::Type::Circle));
-    REQUIRE(Collision::Resolve::circleRect == Collision::getResolveFunc(ShapeT::Type::Circle, ShapeT::Type::Rectangle));
-
-    // rectangle collisions 
-    REQUIRE(Collision::Resolve::rectCircle == Collision::getResolveFunc(ShapeT::Type::Rectangle, ShapeT::Type::Circle));
-    REQUIRE(Collision::Resolve::rectRect == Collision::getResolveFunc(ShapeT::Type::Rectangle, ShapeT::Type::Rectangle));
-}
-
 
 TEST_CASE("Basic collision check", "[Physics][Collision]"){
     BodyConfig config1;
