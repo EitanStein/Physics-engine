@@ -23,8 +23,8 @@ int main(){
         window.clear(sf::Color::Black);
 
         
-        circle_tester->Draw(window);
-        circle_tester->Update(time_step);
+        circle_tester->draw(window);
+        circle_tester->update(time_step);
 
 
         window.display();

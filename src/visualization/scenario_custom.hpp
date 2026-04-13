@@ -4,30 +4,11 @@
 
 
 struct CustomScenario : public Scenario{
-    PhysicsObject circle1;
-    PhysicsObject circle2;
+    CustomScenario() {
+        objects.emplace_back(createCircle(10, BodyConfig(Point(300, 300), DirVector(50, -10), DirVector(0, 0), 10 , 0.5)));
+        objects.emplace_back(createCircle(10, BodyConfig(Point(500, 300), DirVector(-50, -10), DirVector(0, 0), 1, 0.2)));
 
-    CircleRenderer c1;
-    CircleRenderer c2;
-    CustomScenario() : circle1(createCircle(10, BodyConfig(Point(300, 300), DirVector(50, -10), DirVector(0, 0), 10 , 0.5))),
-                    circle2(createCircle(10, BodyConfig(Point(500, 300), DirVector(-50, -10), DirVector(0, 0), 1, 0.2))),
-                    c1(circle1, sf::Color::Blue),
-                    c2(circle2, sf::Color::Green) {
+        renderers.emplace_back(objects[0], sf::Color::Blue);
+        renderers.emplace_back(objects[1], sf::Color::Green);
     }
-
-    void Update(double time_step) override{
-        circle1.getBody().update(time_step);
-        circle2.getBody().update(time_step);
-
-        Collision::Info info;
-
-        if(areOverlapping(circle1, circle2, info))
-            resolveOverlap(circle1, circle2, info);
-    }
-
-    void Draw(sf::RenderWindow& window) override {
-        c1.Draw(window);
-        c2.Draw(window);
-    }
-    
 };
