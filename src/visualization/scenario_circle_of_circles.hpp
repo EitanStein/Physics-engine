@@ -42,14 +42,16 @@ struct ScenarioCircleOfCircles : public Scenario{
         for(auto& circle: circles)
             circle.getBody().update(time_step);
         
+        Collision::Info info;
+
         for(int i=0; i< circles.size()-1 ; ++i){
             PhysicsObject& circle = circles[i];
             for(int j=i+1 ; j < circles.size() ; ++j){
                 PhysicsObject& other_circle = circles[j];
 
 
-                if(areOverlapping(circle, other_circle))
-                    resolveOverlap(circle, other_circle);
+                if(areOverlapping(circle, other_circle, info))
+                    resolveOverlap(circle, other_circle, info);
             }
         }
     }

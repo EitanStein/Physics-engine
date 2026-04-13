@@ -11,15 +11,18 @@ int main(){
     Body& body2 = circle2.getBody();
     
     int repeats = 100;
+
+    Collision::Info info;
+
     for(int i = 0 ; i < repeats ; ++i){
         body1.update(timestep);
         body2.update(timestep);
-        if(areOverlapping(circle1, circle2))
+        if(areOverlapping(circle1, circle2, info))
         {
             LOG_INFO("step {}: colliding", i);
             LOG_INFO("pre collision resolve values:\n{}, {}\n{}, {}", body1.getVelocity().y, body1.getAcceleration().y, body2.getVelocity().y, body2.getAcceleration().y);
             
-            resolveOverlap(circle1, circle2);
+            resolveOverlap(circle1, circle2, info);
 
             LOG_INFO("new values:\n{}, {}\n{}, {}", body1.getVelocity().y, body1.getAcceleration().y, body2.getVelocity().y, body2.getAcceleration().y);
 

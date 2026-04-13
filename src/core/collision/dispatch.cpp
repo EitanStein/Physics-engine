@@ -5,16 +5,16 @@
 
 
 namespace Collision{
-    std::array<std::array<std::pair<DetectFunc, ResolveFunc>, ShapeT::NUM_SHAPES>, ShapeT::NUM_SHAPES> dispatchTable{
+    std::array<std::array<DetectFunc, ShapeT::NUM_SHAPES>, ShapeT::NUM_SHAPES> dispatchTable{
         // circle collisions
-        std::array<std::pair<DetectFunc, ResolveFunc>, ShapeT::NUM_SHAPES>{
-            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::circleCircle, Collision::Resolve::circleCircle},
-            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::circleRect, Collision::Resolve::circleRect}
+        std::array<DetectFunc, ShapeT::NUM_SHAPES>{
+            Collision::Detect::circleCircle,
+            Collision::Detect::circleRect
         },
         // rectangle collisions
-        std::array<std::pair<DetectFunc, ResolveFunc>, ShapeT::NUM_SHAPES>{
-            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::rectCircle, Collision::Resolve::rectCircle},
-            std::pair<DetectFunc, ResolveFunc>{Collision::Detect::rectRect, Collision::Resolve::rectRect}
+        std::array<DetectFunc, ShapeT::NUM_SHAPES>{
+            Collision::Detect::rectCircle,
+            Collision::Detect::rectRect
         }
     };
 
@@ -22,12 +22,6 @@ namespace Collision{
     DetectFunc getDetectFunc(ShapeT::Type shape1, ShapeT::Type shape2) { 
         return dispatchTable
             [static_cast<size_t>(shape1)]
-            [static_cast<size_t>(shape2)].first;
-    }
-
-    ResolveFunc getResolveFunc(ShapeT::Type shape1, ShapeT::Type shape2) { 
-        return dispatchTable
-            [static_cast<size_t>(shape1)]
-            [static_cast<size_t>(shape2)].second;
+            [static_cast<size_t>(shape2)];
     }
 }

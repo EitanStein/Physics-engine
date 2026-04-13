@@ -19,8 +19,10 @@ struct CustomScenario : public Scenario{
         circle1.getBody().update(time_step);
         circle2.getBody().update(time_step);
 
-        if(areOverlapping(circle1, circle2))
-            resolveOverlap(circle1, circle2);
+        Collision::Info info;
+
+        if(areOverlapping(circle1, circle2, info))
+            resolveOverlap(circle1, circle2, info);
     }
 
     void Draw(sf::RenderWindow& window) override {
