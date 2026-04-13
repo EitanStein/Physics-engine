@@ -10,8 +10,8 @@ int main(){
 
     const double time_step = 0.016;
 
-    std::unique_ptr<Scenario> tester = std::make_unique<ScenarioCircleOfCircles>(8, 10);
-    // std::unique_ptr<Scenario> tester = std::make_unique<CustomScenario>();
+    // std::unique_ptr<Scenario> tester = std::make_unique<ScenarioCircleOfCircles>(8, 10);
+    std::unique_ptr<Scenario> tester = std::make_unique<CustomScenario>();
 
 
     while (window.isOpen())
@@ -24,9 +24,8 @@ int main(){
 
         window.clear(sf::Color::Black);
 
-        
-        tester->draw(window);
         tester->update(time_step);
+        tester->draw(window);
 
 
         window.display();
