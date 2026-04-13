@@ -1,14 +1,38 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "PhysicsEngine/core/PhysicsObject.hpp"
+#include <memory>
 
 
 struct Renderer{
     PhysicsObject& obj;
+    std::unique_ptr<sf::Shape> p_drawer;
     
-    Renderer(PhysicsObject& obj) : obj(obj) {}
+    Renderer(PhysicsObject& obj, sf::Color color) : obj(obj) {
+        ShapeT::Type shape = obj.getShape().type();
 
-    virtual void draw(sf::RenderWindow& window) = 0;
+        switch(shape){
+            case ShapeT::Type::Circle:
+                p_drawer = std::make_unique<sf::CircleShape>
+                                    (static_cast<const Circle&>(obj.getShape()).getRadius());
+                break;
+            case ShapeT::Type::Rectangle:
+            const Rectangle& rect = static_cast<const Rectangle&>(obj.getShape());
+                p_drawer = std::make_unique<sf::RectangleShape>
+                                    (sf::Vector2f(rect.getWidth(), rect.getHeight()));
+                break;
+        }
+
+
+        p_drawer->setFillColor(color);
+    }
+
+    void draw(sf::RenderWindow& window){
+        const Body& body = obj.getBody();
+        const Point& pos = body.getPosition();
+        p_drawer->setPosition(sf::Vector2f(pos.x, pos.y));
+        window.draw(*p_drawer);
+    }
 };
 
 struct CircleRenderer{
