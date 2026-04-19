@@ -31,3 +31,11 @@ inline double dist(const Point& p1, const Point& p2){
 inline double dotProduct(const Point& p1, const Point& p2){
     return p1.x * p2.x + p1.y * p2.y;
 }
+
+inline double cross(const DirVector& a, const DirVector& b){
+    return a.x * b.y - a.y * b.x;
+}
+
+inline DirVector cross(double s, const DirVector& v){
+    return DirVector(-s * v.y, s * v.x);
+}
