@@ -11,17 +11,17 @@ private:
 
     void initInertia(){
         switch(shape->type()){
-            case ShapeT::Type::Circle:
-                double rad = static_cast<Circle*>(shape.get())->getRadius();
-                body.resetInertia(0.5 * body.getMass() * rad * rad);
+            case ShapeT::Type::Circle:{
+                double radius = static_cast<Circle*>(shape.get())->getRadius();
+                body.resetInertia(0.5 * body.getMass() * radius * radius);
                 break;
-            
-            case ShapeT::Type::Rectangle:
+            }
+            case ShapeT::Type::Rectangle: {
                 double width = static_cast<Rectangle*>(shape.get())->getWidth();
                 double height = static_cast<Rectangle*>(shape.get())->getHeight();
                 body.resetInertia(0.5 * body.getMass() * (width * width + height * height));
                 break;
-            
+            }
         }
     }
 public:
