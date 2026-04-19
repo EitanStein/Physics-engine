@@ -51,6 +51,9 @@ namespace Collision{
 
             info.penetration = radius - dist;
 
+            // TODO currently basic to get rotation starting - needs to be improved
+            info.contact_point = pos1 - info.normal * circle.getRadius();
+
             return true;
         }
 

@@ -45,6 +45,9 @@ namespace Collision{
                 info.normal = (calc.diff.y > 0) ? DirVector(0,1) : DirVector(0,-1);
             }
 
+            // TODO placeholder before implementing SAT
+            info.contact_point = (pos1 + pos2) * 0.5;
+
             return true;
         }
     }
