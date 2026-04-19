@@ -12,6 +12,11 @@ struct BodyConfig{
     DirVector velocity = DirVector(0,0);
     DirVector acceleration = DirVector(0,0);
 
+    double angle = 0;
+    double angular_vel = 0;
+    double inertia = 0;
+    double inverse_inertia = 0;
+
     double mass = DEFAULT_MASS;
     double restitution = DEFAULT_RESTITUTION;
 
@@ -33,10 +38,17 @@ private:
 
     double mass;
     double restitution;
+
+    double angle = 0;
+    double angular_vel = 0;
+    double inertia = 0;
+    double inverse_inertia = 0;
 public:
     Body(const BodyConfig& body_vars) 
         : position(body_vars.position), velocity(body_vars.velocity), acceleration(body_vars.acceleration),
-         mass(body_vars.mass), restitution(body_vars.restitution) { 
+         mass(body_vars.mass), restitution(body_vars.restitution), 
+         angle(body_vars.angle), angular_vel(body_vars.angular_vel) { 
+        resetInertia(body_vars.inertia);
     }
     void update(double time_step) {
         // TODO reduce object creations here
@@ -44,10 +56,18 @@ public:
 
         position += (velocity + vel_increase / 2) * time_step;
         velocity += vel_increase;
+
+        // TODO add angular vel decay?
+        angle += angular_vel * time_step;
     }
 
     void applyForce(const DirVector& direction) {acceleration += direction;}
     void resetSpeed(const DirVector& direction) {velocity = direction;}
+    void resetAngularSpeed(double angular_spd) {angular_vel = angular_spd;}
+    void resetInertia(double inertia) {
+        inertia = inertia; 
+        inverse_inertia = (inertia == 0) ? 0 : 1/inertia;
+    }
     void movePos(const DirVector& distance) {position += distance;}
 
     const Point& getPosition() const {return position;}
@@ -65,6 +85,11 @@ public:
         return 1/mass;
     } 
     double getRestitution() const {return restitution;}
+
+    double getAngle() const {return angle;}
+    double getAngularVel() const {return angular_vel;}
+    double getInertia() const {return inertia;}
+    double getInverseInertia() const {return inverse_inertia;}
 };
 
 
