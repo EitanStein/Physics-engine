@@ -12,15 +12,21 @@ struct Renderer{
         ShapeT::Type shape = obj.getShape().type();
 
         switch(shape){
-            case ShapeT::Type::Circle:
-                p_drawer = std::make_unique<sf::CircleShape>
-                                    (static_cast<const Circle&>(obj.getShape()).getRadius());
+            case ShapeT::Type::Circle:{
+                double radius = static_cast<const Circle&>(obj.getShape()).getRadius();
+                p_drawer = std::make_unique<sf::CircleShape>(radius);
+                p_drawer->setOrigin(sf::Vector2f(radius, radius));
                 break;
-            case ShapeT::Type::Rectangle:
+            }
+                
+            case ShapeT::Type::Rectangle:{
             const Rectangle& rect = static_cast<const Rectangle&>(obj.getShape());
                 p_drawer = std::make_unique<sf::RectangleShape>
                                     (sf::Vector2f(rect.getWidth(), rect.getHeight()));
+                p_drawer->setOrigin(sf::Vector2f(rect.getWidth()/2, rect.getHeight()/2));
                 break;
+        }
+
         }
 
 
