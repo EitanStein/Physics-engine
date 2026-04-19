@@ -8,8 +8,26 @@ class PhysicsObject {
 private:
     std::unique_ptr<Shape> shape;
     Body body;
+
+    void initInertia(){
+        switch(shape->type()){
+            case ShapeT::Type::Circle:
+                double rad = static_cast<Circle*>(shape.get())->getRadius();
+                body.resetInertia(0.5 * body.getMass() * rad * rad);
+                break;
+            
+            case ShapeT::Type::Rectangle:
+                double width = static_cast<Rectangle*>(shape.get())->getWidth();
+                double height = static_cast<Rectangle*>(shape.get())->getHeight();
+                body.resetInertia(0.5 * body.getMass() * (width * width + height * height));
+                break;
+            
+        }
+    }
 public:
-    PhysicsObject(std::unique_ptr<Shape> p_shape, const BodyConfig& body_vars) : shape(std::move(p_shape)), body(body_vars) {}
+    PhysicsObject(std::unique_ptr<Shape> p_shape, const BodyConfig& body_vars) : shape(std::move(p_shape)), body(body_vars) {
+        initInertia();
+    }
 
     Body& getBody() {return body;}
     const Body& getBody() const {return body;}
