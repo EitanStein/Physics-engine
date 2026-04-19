@@ -36,7 +36,10 @@ namespace Collision{
 
             info.penetration = radius_sum - dist;
 
-            info.contact_point = pos1 + info.normal * circle1.getRadius();
+            Point contact_1 = pos1 + info.normal * circle1.getRadius();
+            Point contact_2 = pos2 - info.normal * circle1.getRadius();
+
+            info.contact_point = (contact_1 + contact_2) / 2;
 
             return true;
         }
