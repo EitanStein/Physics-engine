@@ -20,13 +20,13 @@ struct Renderer{
             }
                 
             case ShapeT::Type::Rectangle:{
-            const Rectangle& rect = static_cast<const Rectangle&>(obj.getShape());
+                const Rectangle& rect = static_cast<const Rectangle&>(obj.getShape());
                 p_drawer = std::make_unique<sf::RectangleShape>
                                     (sf::Vector2f(rect.getWidth(), rect.getHeight()));
                 p_drawer->setOrigin(sf::Vector2f(rect.getWidth()/2, rect.getHeight()/2));
                 break;
-        }
-
+            }
+            
         }
 
 
@@ -37,6 +37,7 @@ struct Renderer{
         const Body& body = obj.getBody();
         const Point& pos = body.getPosition();
         p_drawer->setPosition(sf::Vector2f(pos.x, pos.y));
+        p_drawer->setRotation(sf::radians(body.getAngle()));
         window.draw(*p_drawer);
     }
 };
