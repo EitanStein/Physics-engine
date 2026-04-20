@@ -51,15 +51,12 @@ inline DirVector perpendicular(const DirVector& v) {
     return DirVector(-v.y, v.x);
 }
 
-inline void rotate(DirVector& v, double angle){
+inline DirVector rotate(const DirVector& v, double angle){
     double cos_angle = std::cos(angle);
     double sin_angle = std::sin(angle);
 
-    DirVector copy = v;
-
-    v.x = copy.x*cos_angle - copy.y*sin_angle;
-    v.y = copy.x*sin_angle + copy.y*cos_angle;
-
+    return {v.x*cos_angle - v.y*sin_angle,
+            v.x*sin_angle + v.y*cos_angle};
 }
 
 // TODO template based on size or use something instead of std::array
