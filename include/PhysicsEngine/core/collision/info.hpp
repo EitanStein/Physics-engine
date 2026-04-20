@@ -7,5 +7,6 @@ namespace Collision{
     struct Info{
         DirVector normal;
         double penetration = 0;
+        Point contact_point;
     };
 }

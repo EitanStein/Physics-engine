@@ -4,7 +4,7 @@
 namespace Collision{
     namespace Detect{
         struct CircleRectCalc {
-            Point closest_point;
+            Point contact_point;
             DirVector diff;
             double dist_squared;
         };
@@ -23,8 +23,8 @@ namespace Collision{
             double clamped_x = std::clamp(dx, -half_width, half_width);
             double clamped_y = std::clamp(dy, -half_height, half_height);
 
-            calc.closest_point = Point(pos1.x + clamped_x, pos1.y + clamped_y);
-            calc.diff = pos2 - calc.closest_point;
+            calc.contact_point = Point(pos1.x + clamped_x, pos1.y + clamped_y);
+            calc.diff = pos2 - calc.contact_point;
 
             calc.dist_squared = dotProduct(calc.diff, calc.diff);
 
@@ -42,6 +42,7 @@ namespace Collision{
             if (calc.dist_squared > radius * radius)
                 return false;
 
+            
             double dist = std::sqrt(calc.dist_squared);
 
             if (dist != 0)
@@ -51,6 +52,9 @@ namespace Collision{
 
             info.penetration = radius - dist;
 
+            info.contact_point = calc.contact_point;
+            
+            // TODO deal with circle inside rect situation
             return true;
         }
 
