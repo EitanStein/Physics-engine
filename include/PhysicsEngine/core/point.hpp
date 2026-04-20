@@ -39,3 +39,13 @@ inline double cross(const DirVector& a, const DirVector& b){
 inline DirVector cross(double s, const DirVector& v){
     return DirVector(-s * v.y, s * v.x);
 }
+
+inline DirVector normalize(const DirVector& v) {
+    double len = std::sqrt(dotProduct(v,v));
+    if (len == 0) return DirVector(0,0);
+    return v / len;
+}
+
+inline DirVector perpendicular(const DirVector& v) {
+    return DirVector(-v.y, v.x);
+}
