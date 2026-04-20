@@ -25,9 +25,6 @@ public:
         double half_width = width / 2.0;
         double half_height = height / 2.0;
 
-        double cos_angle = std::cos(angle);
-        double sin_angle = std::sin(angle);
-
         std::array<Point,4> vertices = {
             Point(-half_width, -half_height),
             Point(half_width, -half_height),
@@ -35,16 +32,10 @@ public:
             Point(-half_width, half_height)
         };
 
+        rotate(vertices, angle);
+
         for (auto& v : vertices)
-        {
-            double x = v.x;
-            double y = v.y;
-
-            v.x = x*cos_angle - y*sin_angle;
-            v.y = x*sin_angle + y*cos_angle;
-
             v += pos;
-        }
 
         return vertices;
     }
