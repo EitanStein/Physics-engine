@@ -16,10 +16,13 @@ namespace Collision{
             return calc;
         }
 
-        bool circleCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
+        bool circleCircle(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
             const Circle& circle1 = static_cast<const Circle&>(shape1);
             const Circle& circle2 = static_cast<const Circle&>(shape2);
-            
+
+            const Point& pos1 = body1.getPosition();
+            const Point& pos2 = body2.getPosition();
+
             CircleCircleCalc calc = preComputeCircleCircle(pos1, pos2);
 
             double radius_sum = circle1.getRadius() + circle2.getRadius();

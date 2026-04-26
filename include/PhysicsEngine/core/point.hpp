@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <array>
 
 struct Point{
     double x;
@@ -38,4 +39,34 @@ inline double cross(const DirVector& a, const DirVector& b){
 
 inline DirVector cross(double s, const DirVector& v){
     return DirVector(-s * v.y, s * v.x);
+}
+
+inline DirVector normalize(const DirVector& v) {
+    double len = std::sqrt(dotProduct(v,v));
+    if (len == 0) return DirVector(0,0);
+    return v / len;
+}
+
+inline DirVector perpendicular(const DirVector& v) {
+    return DirVector(-v.y, v.x);
+}
+
+inline DirVector rotate(const DirVector& v, double angle){
+    double cos_angle = std::cos(angle);
+    double sin_angle = std::sin(angle);
+
+    return {v.x*cos_angle - v.y*sin_angle,
+            v.x*sin_angle + v.y*cos_angle};
+}
+
+// TODO template based on size or use something instead of std::array
+inline void rotate(std::array<DirVector, 4>& arr_v, double angle){
+    double cos_angle = std::cos(angle);
+    double sin_angle = std::sin(angle);
+
+    for (auto& v : arr_v){
+        DirVector copy = v;
+        v.x = copy.x*cos_angle - copy.y*sin_angle;
+        v.y = copy.x*sin_angle + copy.y*cos_angle;
+    }  
 }

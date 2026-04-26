@@ -37,14 +37,14 @@ public:
 };
 
 
-inline bool areOverlapping(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Collision::Info& info){
+inline bool areOverlapping(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Collision::Info& info){
     Collision::DetectFunc detect_func = Collision::getDetectFunc(shape1.type(), shape2.type());
-    return detect_func(shape1, pos1, shape2, pos2, info);
+    return detect_func(shape1, body1, shape2, body2, info);
 }
 
 inline bool areOverlapping(const PhysicsObject& obj1, const PhysicsObject& obj2, Collision::Info& info){
-    return areOverlapping(obj1.getShape(), obj1.getBody().getPosition(),
-                        obj2.getShape(), obj2.getBody().getPosition(), info);
+    return areOverlapping(obj1.getShape(), obj1.getBody(),
+                        obj2.getShape(), obj2.getBody(), info);
 }
 
 
