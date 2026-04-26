@@ -4,28 +4,27 @@
 namespace Collision{
     namespace Detect{
         struct CircleRectCalc {
-            Point contact_point;
+            Point closet_local_contact;
+            DirVector localized_diff;
             DirVector diff;
             double dist_squared;
         };
 
-        inline CircleRectCalc preComputeCircleRect(const Circle& circle, const Point& pos1,
-                                           const Rectangle& rect, const Point& pos2)
+        inline CircleRectCalc preComputeCircleRect(const Circle& circle, const Point& circle_pos,
+                                           const Rectangle& rect, const Point& rect_pos, double rect_angle)
         {
             CircleRectCalc calc;
 
             double half_width = rect.getWidth() / 2.0;
             double half_height = rect.getHeight() / 2.0;
 
-            double dx = pos2.x - pos1.x;
-            double dy = pos2.y - pos1.y;
+            DirVector center_diff = rect_pos - circle_pos;
+            calc.localized_diff = rotate(center_diff, -rect_angle);
 
-            double clamped_x = std::clamp(dx, -half_width, half_width);
-            double clamped_y = std::clamp(dy, -half_height, half_height);
+            calc.closet_local_contact = {std::clamp(calc.localized_diff.x, -half_width, half_width),
+                                        std::clamp(calc.localized_diff.y, -half_height, half_height)};
 
-            calc.contact_point = Point(pos1.x + clamped_x, pos1.y + clamped_y);
-            calc.diff = pos2 - calc.contact_point;
-
+            calc.diff = calc.closet_local_contact - calc.localized_diff;
             calc.dist_squared = dotProduct(calc.diff, calc.diff);
 
             return calc;
@@ -35,10 +34,10 @@ namespace Collision{
             const Circle& circle = static_cast<const Circle&>(shape1);
             const Rectangle& rect = static_cast<const Rectangle&>(shape2);
 
-            const Point& pos1 = body1.getPosition();
-            const Point& pos2 = body2.getPosition();
+            const Point& circle_pos = body1.getPosition();
+            const Point& rect_pos = body2.getPosition();
             
-            CircleRectCalc calc = preComputeCircleRect(circle, pos1, rect, pos2);
+            CircleRectCalc calc = preComputeCircleRect(circle, circle_pos, rect, rect_pos, body2.getAngle());
 
             double radius = circle.getRadius();
             // TODO tangent circles considered overlap or not (currently yes)
@@ -48,16 +47,33 @@ namespace Collision{
             
             double dist = std::sqrt(calc.dist_squared);
 
-            if (dist != 0)
-                info.normal = calc.diff / dist;
+            DirVector normal_local;
+
+            if (dist == 0.0f)
+            {
+                float dx = rect.getWidth()/2 - std::abs(calc.localized_diff.x);
+                float dy = rect.getHeight()/2 - std::abs(calc.localized_diff.y);
+
+                if (dx < dy)
+                    normal_local = { (calc.localized_diff.x > 0) ? -1.0f : 1.0f, 0 };
+                else
+                    normal_local = { 0, (calc.localized_diff.y > 0) ? -1.0f : 1.0f };
+
+                info.penetration = std::min(dx, dy);
+            }
             else
-                info.normal = DirVector(1, 0);
+            {
+                normal_local = calc.diff * (1.0f / dist);
+                info.penetration = radius - dist;
+            }
 
-            info.penetration = radius - dist;
+            info.normal = rotate(normal_local, body2.getAngle());
 
-            info.contact_point = calc.contact_point;
-            
-            // TODO deal with circle inside rect situation
+            if (dotProduct(rect_pos - circle_pos, info.normal) < 0)
+                info.normal = info.normal * -1.0f;
+
+            info.contact_point = rect_pos - rotate(calc.closet_local_contact, body2.getAngle());
+
             return true;
         }
 
