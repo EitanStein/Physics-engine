@@ -26,9 +26,12 @@ namespace Collision{
             return calc;
         }
 
-        bool rectRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
+        bool rectRect(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
             const Rectangle& rect1 = static_cast<const Rectangle&>(shape1);
             const Rectangle& rect2 = static_cast<const Rectangle&>(shape2);
+
+            const Point& pos1 = body1.getPosition();
+            const Point& pos2 = body2.getPosition();
             
             rectRectCalc calc = preComputeRectRect(rect1, pos1, rect2, pos2);
 

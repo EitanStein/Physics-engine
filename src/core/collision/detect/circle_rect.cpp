@@ -31,9 +31,12 @@ namespace Collision{
             return calc;
         }
 
-        bool circleRect(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
+        bool circleRect(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
             const Circle& circle = static_cast<const Circle&>(shape1);
             const Rectangle& rect = static_cast<const Rectangle&>(shape2);
+
+            const Point& pos1 = body1.getPosition();
+            const Point& pos2 = body2.getPosition();
             
             CircleRectCalc calc = preComputeCircleRect(circle, pos1, rect, pos2);
 
@@ -58,8 +61,8 @@ namespace Collision{
             return true;
         }
 
-        bool rectCircle(const Shape& shape1, const Point& pos1, const Shape& shape2, const Point& pos2, Info& info){
-            bool result = circleRect(shape2, pos2, shape1, pos1, info);
+        bool rectCircle(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
+            bool result = circleRect(shape2, body2, shape1, body1, info);
             info.normal *= - 1;
             return result;
         }

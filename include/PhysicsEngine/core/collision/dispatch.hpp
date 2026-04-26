@@ -7,7 +7,7 @@
 
 namespace Collision{
 
-    using DetectFunc = bool(*)(const Shape&, const Point&, const Shape&, const Point&, Info&);
+    using DetectFunc = bool(*)(const Shape&, const Body&, const Shape&, const Body&, Info&);
 
     DetectFunc getDetectFunc(ShapeT::Type shape1, ShapeT::Type shape2);
 
