@@ -5,11 +5,6 @@
 
 namespace Collision{
     namespace Detect{
-        struct rectRectCalc {
-            Point collision_point;
-            DirVector diff;
-        };
-
         inline double calcOverlap(const DirVector& axis, const std::array<DirVector, 4>& axes,
                                     const Rectangle& rect1,  const Rectangle& rect2, const DirVector& diff){
             
