@@ -46,13 +46,13 @@ struct Renderer{
 };
 
 PhysicsObject createRect(double width, double height, const BodyConfig& body_config){
-    PhysicsObject rect(std::move(ShapeFactory::createRect(width, height)), body_config);
+    PhysicsObject rect(ShapeFactory::createRect(width, height), body_config);
     return rect;
 }
 
 
 PhysicsObject createCircle(double rad, const BodyConfig& body_config){
-    PhysicsObject circle(std::move(ShapeFactory::createCircle(rad)), body_config);
+    PhysicsObject circle(ShapeFactory::createCircle(rad), body_config);
     return circle;
 }
 
