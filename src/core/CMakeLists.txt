@@ -8,7 +8,8 @@ add_library(physics_module
 if (MSVC)
     target_compile_options(physics_module PRIVATE /W4)
 else()
-    target_compile_options(physics_module PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(physics_module PRIVATE -Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer)
+    target_link_libraries(physics_module PRIVATE -fsanitize=address)
 endif()
 
 target_link_libraries(physics_module

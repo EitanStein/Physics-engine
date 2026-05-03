@@ -3,7 +3,8 @@ add_executable(Physics-Engine main.cpp)
 if (MSVC)
     target_compile_options(Physics-Engine PRIVATE /W4)
 else()
-    target_compile_options(Physics-Engine PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(Physics-Engine PRIVATE -Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer)
+    target_link_libraries(Physics-Engine PRIVATE -fsanitize=address)
 endif()
 
 target_link_libraries(Physics-Engine
