@@ -5,6 +5,12 @@ add_library(physics_module
       collision/resolve.cpp 
       collision/dispatch.cpp)
 
+if (MSVC)
+    target_compile_options(physics_module PRIVATE /W4)
+else()
+    target_compile_options(physics_module PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
 target_link_libraries(physics_module
   PRIVATE
     spdlog::spdlog

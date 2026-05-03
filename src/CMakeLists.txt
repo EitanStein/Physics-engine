@@ -1,5 +1,11 @@
 add_executable(Physics-Engine main.cpp)
 
+if (MSVC)
+    target_compile_options(Physics-Engine PRIVATE /W4)
+else()
+    target_compile_options(Physics-Engine PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
 target_link_libraries(Physics-Engine
   PRIVATE
     logging_module
