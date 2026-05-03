@@ -22,6 +22,9 @@ private:
                 body.resetInertia(0.5 * body.getMass() * (width * width + height * height));
                 break;
             }
+            default:{
+                body.resetInertia(0);
+            }
         }
     }
 public:
