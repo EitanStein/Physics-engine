@@ -26,6 +26,9 @@ struct Renderer{
                 p_drawer->setOrigin(sf::Vector2f(rect.getWidth()/2, rect.getHeight()/2));
                 break;
             }
+            default:{
+                throw std::runtime_error("invalid shape type");
+            }
             
         }
 
@@ -43,13 +46,13 @@ struct Renderer{
 };
 
 PhysicsObject createRect(double width, double height, const BodyConfig& body_config){
-    PhysicsObject rect(std::move(ShapeFactory::createRect(width, height)), body_config);
+    PhysicsObject rect(ShapeFactory::createRect(width, height), body_config);
     return rect;
 }
 
 
 PhysicsObject createCircle(double rad, const BodyConfig& body_config){
-    PhysicsObject circle(std::move(ShapeFactory::createCircle(rad)), body_config);
+    PhysicsObject circle(ShapeFactory::createCircle(rad), body_config);
     return circle;
 }
 
@@ -66,9 +69,9 @@ struct Scenario{
         
         Collision::Info info;
 
-        for(int i=0; i< objects.size()-1 ; ++i){
+        for(size_t i=0; i< objects.size()-1 ; ++i){
             PhysicsObject& obj = objects[i];
-            for(int j=i+1 ; j < objects.size() ; ++j){
+            for(size_t j=i+1 ; j < objects.size() ; ++j){
                 PhysicsObject& other_obj = objects[j];
 
 
