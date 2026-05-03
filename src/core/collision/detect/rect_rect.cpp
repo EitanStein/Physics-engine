@@ -69,8 +69,6 @@ namespace Collision{
             info.normal = smallest_axis;
             info.penetration = min_overlap;
 
-            Point contact = pos1;
-
             DirVector local_normal = {
                 dotProduct(info.normal, axes[0]),
                 dotProduct(info.normal, axes[1])
