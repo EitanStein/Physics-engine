@@ -10,8 +10,8 @@ namespace Collision{
             double dist_squared;
         };
 
-        inline CircleRectCalc preComputeCircleRect(const Circle& circle, const Point& circle_pos,
-                                           const Rectangle& rect, const Point& rect_pos, double rect_angle)
+        inline CircleRectCalc preComputeCircleRect([[maybe_unused]] const Circle& circle, const Point& circle_pos,
+                                                    const Rectangle& rect, const Point& rect_pos, double rect_angle)
         {
             CircleRectCalc calc;
 

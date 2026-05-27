@@ -16,7 +16,8 @@ namespace ShapeT{
 
 class Shape {
 public:
-    virtual bool contains(const Point& pos, const Point& point) const {return false;};
+    virtual bool contains([[maybe_unused]] const Point& pos,[[maybe_unused]] const Point& point) const {return false;};
     virtual ShapeT::Type type() const = 0;
+    virtual ~Shape() = default;
 };
 
