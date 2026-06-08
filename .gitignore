@@ -49,3 +49,5 @@ build/
 
 # log files
 logs.txt
+
+CMakeUserPresets.json
