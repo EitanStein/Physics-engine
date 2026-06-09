@@ -3,44 +3,22 @@
 
 namespace Collision{
     namespace Detect{
-        struct CircleCircleCalc {
-            DirVector diff;
-            double dist_squared;
-        };
-
-        inline CircleCircleCalc preComputeCircleCircle(const Point& pos1, const Point& pos2)
-        {
-            CircleCircleCalc calc;
-            calc.diff = pos2 - pos1;
-            calc.dist_squared = dotProduct(calc.diff, calc.diff);
-            return calc;
-        }
-
         bool circleCircle(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
-            const Circle& circle1 = static_cast<const Circle&>(shape1);
-            const Circle& circle2 = static_cast<const Circle&>(shape2);
+            int radius1 = static_cast<const Circle&>(shape1).getRadius();
+            int radius2 = static_cast<const Circle&>(shape2).getRadius();
 
             const Point& pos1 = body1.getPosition();
             const Point& pos2 = body2.getPosition();
 
-            CircleCircleCalc calc = preComputeCircleCircle(pos1, pos2);
+            DirVector center_diff = pos2 - pos1;
+            double center_dist = dist(pos1, pos2);
 
-            double radius_sum = circle1.getRadius() + circle2.getRadius();
-            // TODO tangent circles considered overlap or not (currently yes)
-            if (calc.dist_squared > radius_sum * radius_sum)
-                return false;
 
-            double dist = std::sqrt(calc.dist_squared);
+            info.normal = (center_dist != 0) ? center_diff / center_dist : DirVector(1, 0);
+            info.penetration = radius1 + radius2 - center_dist;
 
-            if (dist != 0)
-                info.normal = calc.diff / dist;
-            else
-                info.normal = DirVector(1, 0);
-
-            info.penetration = radius_sum - dist;
-
-            Point contact_1 = pos1 + info.normal * circle1.getRadius();
-            Point contact_2 = pos2 - info.normal * circle1.getRadius();
+            Point contact_1 = pos1 + info.normal * radius1;
+            Point contact_2 = pos2 - info.normal * radius2;
 
             info.contact_point = (contact_1 + contact_2) / 2;
 
