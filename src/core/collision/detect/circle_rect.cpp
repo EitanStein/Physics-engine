@@ -4,75 +4,70 @@
 namespace Collision{
     namespace Detect{
         struct CircleRectCalc {
-            Point closet_local_contact;
-            DirVector localized_diff;
-            DirVector diff;
-            double dist_squared;
+            Point closet_rect_contact;
+            DirVector rotated_center_diff;
+            DirVector diff_to_closet_contact;
+            double dist_squared_to_closet_contact;
         };
 
-        inline CircleRectCalc preComputeCircleRect([[maybe_unused]] const Circle& circle, const Point& circle_pos,
-                                                    const Rectangle& rect, const Point& rect_pos, double rect_angle)
+        inline CircleRectCalc preComputeCircleRect(const Point& circle_pos, const Point& rect_pos,
+                                                    double rect_half_width, double rect_half_height, double rect_angle)
         {
             CircleRectCalc calc;
 
-            double half_width = rect.getWidth() / 2.0;
-            double half_height = rect.getHeight() / 2.0;
+            calc.rotated_center_diff = rotate(rect_pos - circle_pos, -rect_angle);
 
-            DirVector center_diff = rect_pos - circle_pos;
-            calc.localized_diff = rotate(center_diff, -rect_angle);
+            calc.closet_rect_contact = {std::clamp(calc.rotated_center_diff.x, -rect_half_width, rect_half_width),
+                                        std::clamp(calc.rotated_center_diff.y, -rect_half_height, rect_half_height)};
 
-            calc.closet_local_contact = {std::clamp(calc.localized_diff.x, -half_width, half_width),
-                                        std::clamp(calc.localized_diff.y, -half_height, half_height)};
-
-            calc.diff = calc.closet_local_contact - calc.localized_diff;
-            calc.dist_squared = dotProduct(calc.diff, calc.diff);
+            calc.diff_to_closet_contact = calc.closet_rect_contact - calc.rotated_center_diff;
+            calc.dist_squared_to_closet_contact = dotProduct(calc.diff_to_closet_contact, calc.diff_to_closet_contact);
 
             return calc;
         }
 
         bool circleRect(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
-            const Circle& circle = static_cast<const Circle&>(shape1);
-            const Rectangle& rect = static_cast<const Rectangle&>(shape2);
+            double circle_rad = static_cast<const Circle&>(shape1).getRadius();
+            double rect_half_width = static_cast<const Rectangle&>(shape2).getHalfWidth();
+            double rect_half_height = static_cast<const Rectangle&>(shape2).getHalfHeight();
 
             const Point& circle_pos = body1.getPosition();
             const Point& rect_pos = body2.getPosition();
             
-            CircleRectCalc calc = preComputeCircleRect(circle, circle_pos, rect, rect_pos, body2.getAngle());
-
-            double radius = circle.getRadius();
-            // TODO tangent circles considered overlap or not (currently yes)
-            if (calc.dist_squared > radius * radius)
+            CircleRectCalc calc = preComputeCircleRect(circle_pos, rect_pos, rect_half_width, rect_half_height, body2.getAngle());
+            
+            if(calc.dist_squared_to_closet_contact > circle_rad*circle_rad)
                 return false;
 
-            
-            double dist = std::sqrt(calc.dist_squared);
+            double dist_to_closest_contact = std::sqrt(calc.dist_squared_to_closet_contact);
 
-            DirVector normal_local;
+            DirVector rotated_normal;
 
-            if (dist == 0.0f)
+            // TODO how plausible is this scenario?
+            if (dist_to_closest_contact == 0.0f) [[unlikely]]
             {
-                float dx = rect.getWidth()/2 - std::abs(calc.localized_diff.x);
-                float dy = rect.getHeight()/2 - std::abs(calc.localized_diff.y);
+                float dx = rect_half_width - std::abs(calc.rotated_center_diff.x);
+                float dy = rect_half_height - std::abs(calc.rotated_center_diff.y);
 
                 if (dx < dy)
-                    normal_local = { (calc.localized_diff.x > 0) ? -1.0f : 1.0f, 0 };
+                    rotated_normal = { (calc.rotated_center_diff.x > 0) ? -1.0f : 1.0f, 0 };
                 else
-                    normal_local = { 0, (calc.localized_diff.y > 0) ? -1.0f : 1.0f };
+                    rotated_normal = { 0, (calc.rotated_center_diff.y > 0) ? -1.0f : 1.0f };
 
                 info.penetration = std::min(dx, dy);
             }
             else
             {
-                normal_local = calc.diff * (1.0f / dist);
-                info.penetration = radius - dist;
+                rotated_normal = calc.diff_to_closet_contact * (1.0f / dist_to_closest_contact);
+                info.penetration = circle_rad - dist_to_closest_contact;
             }
 
-            info.normal = rotate(normal_local, body2.getAngle());
+            info.normal = rotate(rotated_normal, body2.getAngle());
 
             if (dotProduct(rect_pos - circle_pos, info.normal) < 0)
                 info.normal = info.normal * -1.0f;
 
-            info.contact_point = rect_pos - rotate(calc.closet_local_contact, body2.getAngle());
+            info.contact_point = rect_pos - rotate(calc.closet_rect_contact, body2.getAngle());
 
             return true;
         }
