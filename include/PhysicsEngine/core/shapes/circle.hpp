@@ -10,4 +10,5 @@ public:
     double getRadius() const {return radius;}
     bool contains(const Point& pos, const Point& point) const override { return dist(pos, point) <= radius;}
     ShapeT::Type type() const override {return ShapeT::Type::Circle; }
+    double boundingRadius() const override { return radius; }
 };
