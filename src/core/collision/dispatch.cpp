@@ -27,7 +27,7 @@ namespace Collision{
     }
 
     bool isColliding(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Info& info){
-        if(!Collision::Detect::isBoundingRadiusColliding(shape1, body1, shape2, body2));
+        if(!Collision::Detect::isBoundingRadiusColliding(shape1, body1, shape2, body2))
             return false;
 
         return getDetectFunc(shape1.type(), shape2.type())(

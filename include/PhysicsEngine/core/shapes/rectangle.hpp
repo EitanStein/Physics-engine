@@ -33,10 +33,10 @@ public:
 
     std::array<Point,4> getVertices(const Point& pos, double angle) const{
         std::array<Point,4> vertices = {
-            Point(-half_width, -half_height),
-            Point(half_width, -half_height),
-            Point(half_width, half_height),
-            Point(-half_width, half_height)
+            Point{-half_width, -half_height},
+            Point{half_width, -half_height},
+            Point{half_width, half_height},
+            Point{-half_width, half_height}
         };
 
         rotate(vertices, angle);

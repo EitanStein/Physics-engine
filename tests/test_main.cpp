@@ -7,38 +7,38 @@
 #include "PhysicsEngine/core/PhysicsObject.hpp"
 
 TEST_CASE("velocity changes are accurate", "[Physics][Movement]"){
-    Body test_body(BodyConfig(Point(0,0), DirVector(5,5), DirVector(0,0)));
+    Body test_body(BodyConfig{Point{}, DirVector{5,5}, DirVector{}});
     test_body.update(2);
-    REQUIRE(test_body.getPosition() == Point(10,10));
+    REQUIRE(test_body.getPosition() == Point{10,10});
 }
 
 TEST_CASE("acceleration changes are accurate", "[Physics][Movement]"){
-    Body test_body(BodyConfig(Point(0,0), DirVector(1,1), DirVector(2,3)));
+    Body test_body(BodyConfig{Point{}, DirVector{1,1}, DirVector{2,3}});
     test_body.update(2);
-    REQUIRE(test_body.getPosition() == Point(6,8));
-    REQUIRE(test_body.getVelocity() == DirVector(5,7));
+    REQUIRE(test_body.getPosition() == Point{6,8});
+    REQUIRE(test_body.getVelocity() == DirVector{5,7});
 }
 
 TEST_CASE("Apply force is working", "[Physics][Movement]"){
-    Body test_body(BodyConfig(Point(0,5), DirVector(0,0), DirVector(0,-10)));
+    Body test_body(BodyConfig{Point{0,5}, DirVector{}, DirVector{0,-10}});
     test_body.update(1);
-    REQUIRE(test_body.getPosition() == Point(0, 0));
+    REQUIRE(test_body.getPosition() == Point{});
 
-    test_body.applyForce(DirVector(0, 20));
+    test_body.applyForce(DirVector{0, 20});
     test_body.update(1);
-    REQUIRE(test_body.getPosition() == Point(0, -5));
+    REQUIRE(test_body.getPosition() == Point{0, -5});
 }
 
 
 TEST_CASE("Basic collision check", "[Physics][Collision]"){
-    BodyConfig config1;
-    BodyConfig config2;
+    BodyConfig config1{};
+    BodyConfig config2{};
 
     Collision::Info info;
     Collision::Info direct_call_info;
 
-    config1.position = Point(0, 5);
-    config2.position = Point(5, 5);
+    config1.position = Point{0, 5};
+    config2.position = Point{5, 5};
 
     {
         PhysicsObject object1(ShapeFactory::createCircle(3), config1);
@@ -85,8 +85,8 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         REQUIRE(!areOverlapping(object1, object2, info));
     }
 
-    config1.position = Point(5, 0);
-    config2.position = Point(5, 5);
+    config1.position = Point{5, 0};
+    config2.position = Point{5, 5};
 
     {
         PhysicsObject object1(ShapeFactory::createCircle(3), config1);
@@ -95,8 +95,8 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
     }
 
     {
-        PhysicsObject object1(ShapeFactory::createCircle(3), config1);
-        PhysicsObject object2(ShapeFactory::createRect(1, 10), config2);
+        PhysicsObject object1(ShapeFactory::createRect(1, 10), config1);
+        PhysicsObject object2(ShapeFactory::createCircle(3), config2);
         REQUIRE(areOverlapping(object1, object2, info));
         Collision::Detect::rectCircle(object1.getShape(), object1.getBody(),
                                         object2.getShape(), object2.getBody(), direct_call_info);
@@ -118,8 +118,8 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         REQUIRE(info == direct_call_info);
     }
 
-    config1.position = Point(0, 0);
-    config2.position = Point(5, 5);
+    config1.position = Point{0, 0};
+    config2.position = Point{5, 5};
 
     {
         PhysicsObject object1(ShapeFactory::createRect(12, 1), config1);
