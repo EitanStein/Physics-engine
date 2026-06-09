@@ -30,22 +30,12 @@ TEST_CASE("Apply force is working", "[Physics][Movement]"){
 }
 
 
-TEST_CASE("Collision dispatch detect check", "[Collision][Dispatch]"){
-    // circle collisions
-    REQUIRE(Collision::Detect::circleCircle == Collision::getDetectFunc(ShapeT::Type::Circle, ShapeT::Type::Circle));
-    REQUIRE(Collision::Detect::circleRect == Collision::getDetectFunc(ShapeT::Type::Circle, ShapeT::Type::Rectangle));
-
-    // rectangle collisions 
-    REQUIRE(Collision::Detect::rectCircle == Collision::getDetectFunc(ShapeT::Type::Rectangle, ShapeT::Type::Circle));
-    REQUIRE(Collision::Detect::rectRect == Collision::getDetectFunc(ShapeT::Type::Rectangle, ShapeT::Type::Rectangle));
-}
-
-
 TEST_CASE("Basic collision check", "[Physics][Collision]"){
     BodyConfig config1;
     BodyConfig config2;
 
     Collision::Info info;
+    Collision::Info direct_call_info;
 
     config1.position = Point(0, 5);
     config2.position = Point(5, 5);
@@ -54,6 +44,9 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         PhysicsObject object1(ShapeFactory::createCircle(3), config1);
         PhysicsObject object2(ShapeFactory::createCircle(5), config2);
         REQUIRE(areOverlapping(object1, object2, info));
+        Collision::Detect::circleCircle(object1.getShape(), object1.getBody(),
+                                        object2.getShape(), object2.getBody(), direct_call_info);
+        REQUIRE(info == direct_call_info);
     }
 
     {
@@ -66,6 +59,9 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         PhysicsObject object1(ShapeFactory::createCircle(3), config1);
         PhysicsObject object2(ShapeFactory::createRect(10, 1), config2);
         REQUIRE(areOverlapping(object1, object2, info));
+        Collision::Detect::circleRect(object1.getShape(), object1.getBody(),
+                                        object2.getShape(), object2.getBody(), direct_call_info);
+        REQUIRE(info == direct_call_info);
     }
 
     {
@@ -78,6 +74,9 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         PhysicsObject object1(ShapeFactory::createRect(6, 1), config1);
         PhysicsObject object2(ShapeFactory::createRect(10, 1), config2);
         REQUIRE(areOverlapping(object1, object2, info));
+        Collision::Detect::rectRect(object1.getShape(), object1.getBody(),
+                                        object2.getShape(), object2.getBody(), direct_call_info);
+        REQUIRE(info == direct_call_info);
     }
 
     {
@@ -99,6 +98,9 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         PhysicsObject object1(ShapeFactory::createCircle(3), config1);
         PhysicsObject object2(ShapeFactory::createRect(1, 10), config2);
         REQUIRE(areOverlapping(object1, object2, info));
+        Collision::Detect::rectCircle(object1.getShape(), object1.getBody(),
+                                        object2.getShape(), object2.getBody(), direct_call_info);
+        REQUIRE(info == direct_call_info);
     }
 
     {
@@ -111,6 +113,9 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         PhysicsObject object1(ShapeFactory::createRect(6, 1), config1);
         PhysicsObject object2(ShapeFactory::createRect(1, 10), config2);
         REQUIRE(areOverlapping(object1, object2, info));
+        Collision::Detect::rectRect(object1.getShape(), object1.getBody(),
+                                        object2.getShape(), object2.getBody(), direct_call_info);
+        REQUIRE(info == direct_call_info);
     }
 
     config1.position = Point(0, 0);
@@ -120,6 +125,9 @@ TEST_CASE("Basic collision check", "[Physics][Collision]"){
         PhysicsObject object1(ShapeFactory::createRect(12, 1), config1);
         PhysicsObject object2(ShapeFactory::createRect(1, 12), config2);
         REQUIRE(areOverlapping(object1, object2, info));
+        Collision::Detect::rectRect(object1.getShape(), object1.getBody(),
+                                        object2.getShape(), object2.getBody(), direct_call_info);
+        REQUIRE(info == direct_call_info);
     }
 
     {
