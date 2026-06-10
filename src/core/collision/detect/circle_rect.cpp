@@ -36,7 +36,7 @@ namespace Collision{
             
             CircleRectCalc calc = preComputeCircleRect(circle_pos, rect_pos, rect_half_width, rect_half_height, body2.getAngle());
             
-            if(calc.dist_squared_to_closet_contact > circle_rad*circle_rad)
+            if(calc.dist_squared_to_closet_contact >= circle_rad*circle_rad)
                 return false;
 
             double dist_to_closest_contact = std::sqrt(calc.dist_squared_to_closet_contact);
