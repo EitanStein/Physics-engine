@@ -40,27 +40,12 @@ namespace Collision{
                 return false;
 
             double dist_to_closest_contact = std::sqrt(calc.dist_squared_to_closet_contact);
+            
+            if(dist_to_closest_contact == 0.0) [[unlikely]]
+                dist_to_closest_contact = 0.01f;
 
-            DirVector rotated_normal;
-
-            // TODO how plausible is this scenario?
-            if (dist_to_closest_contact == 0.0f) [[unlikely]]
-            {
-                float dx = rect_half_width - std::abs(calc.rotated_center_diff.x);
-                float dy = rect_half_height - std::abs(calc.rotated_center_diff.y);
-
-                if (dx < dy)
-                    rotated_normal = { (calc.rotated_center_diff.x > 0) ? -1.0f : 1.0f, 0 };
-                else
-                    rotated_normal = { 0, (calc.rotated_center_diff.y > 0) ? -1.0f : 1.0f };
-
-                info.penetration = std::min(dx, dy);
-            }
-            else
-            {
-                rotated_normal = calc.diff_to_closet_contact * (1.0f / dist_to_closest_contact);
-                info.penetration = circle_rad - dist_to_closest_contact;
-            }
+            DirVector rotated_normal = calc.diff_to_closet_contact * (1.0f / dist_to_closest_contact);
+            info.penetration = circle_rad - dist_to_closest_contact;
 
             info.normal = rotate(rotated_normal, body2.getAngle());
 
