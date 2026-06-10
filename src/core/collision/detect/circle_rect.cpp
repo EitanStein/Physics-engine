@@ -40,13 +40,14 @@ namespace Collision{
                 return false;
 
             double dist_to_closest_contact = std::sqrt(calc.dist_squared_to_closet_contact);
+
+            info.penetration = circle_rad - dist_to_closest_contact;
             
             if(dist_to_closest_contact == 0.0) [[unlikely]]
                 dist_to_closest_contact = 0.01f;
 
             DirVector rotated_normal = calc.diff_to_closet_contact * (1.0f / dist_to_closest_contact);
-            info.penetration = circle_rad - dist_to_closest_contact;
-
+            
             info.normal = rotate(rotated_normal, body2.getAngle());
 
             if (dotProduct(rect_pos - circle_pos, info.normal) < 0)
