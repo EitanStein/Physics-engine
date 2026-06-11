@@ -73,14 +73,14 @@ namespace Collision{
             if(info.penetration == 0.0f)
                 return false;
 
-            DirVector rotated_normal = {
+            DirVector rotated_normal{
                 dotProduct(info.normal, axes[0]),
                 dotProduct(info.normal, axes[1])
             };
 
             info.contact_point = pos1 +
-                                axes[0] * (rotated_normal.x > 0 ? rect1.getWidth() : -rect1.getWidth()) / 2 +
-                                axes[1] * (rotated_normal.y > 0 ? rect1.getHeight() : -rect1.getHeight()) / 2;
+                                axes[0] * (rotated_normal.x > 0 ? rect1.getHalfWidth() : -rect1.getHalfWidth()) +
+                                axes[1] * (rotated_normal.y > 0 ? rect1.getHalfHeight() : -rect1.getHalfHeight());
 
             return true;
         }
