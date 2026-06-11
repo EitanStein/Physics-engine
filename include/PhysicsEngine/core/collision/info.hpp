@@ -5,8 +5,12 @@
 
 namespace Collision{
     struct Info{
-        DirVector normal;
+        DirVector normal{};
         double penetration = 0;
-        Point contact_point;
+        Point contact_point{};
+
+        constexpr bool operator==(const Info& other) const{
+            return (normal == other.normal && penetration == other.penetration && contact_point == other.contact_point);
+        }
     };
 }

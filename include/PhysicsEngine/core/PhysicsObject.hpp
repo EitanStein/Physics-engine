@@ -3,12 +3,14 @@
 #include "shapes/shape_factory.hpp"
 #include "body.hpp"
 #include "collision/dispatch.hpp"
+#include "collision/resolve.hpp"
 
 class PhysicsObject {
 private:
     std::unique_ptr<Shape> shape;
     Body body;
 
+    // TODO is there a better way to init inertia?
     void initInertia(){
         switch(shape->type()){
             case ShapeT::Type::Circle:{
@@ -41,8 +43,7 @@ public:
 
 
 inline bool areOverlapping(const Shape& shape1, const Body& body1, const Shape& shape2, const Body& body2, Collision::Info& info){
-    Collision::DetectFunc detect_func = Collision::getDetectFunc(shape1.type(), shape2.type());
-    return detect_func(shape1, body1, shape2, body2, info);
+    return Collision::isColliding(shape1, body1, shape2, body2, info);
 }
 
 inline bool areOverlapping(const PhysicsObject& obj1, const PhysicsObject& obj2, Collision::Info& info){

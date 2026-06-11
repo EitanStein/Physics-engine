@@ -8,9 +8,9 @@ const double DEFAULT_RESTITUTION = 0.8;
 
 
 struct BodyConfig{
-    Point position = Point(0,0);
-    DirVector velocity = DirVector(0,0);
-    DirVector acceleration = DirVector(0,0);
+    Point position{};
+    DirVector velocity{};
+    DirVector acceleration{};
 
     double angle = 0;
     double angular_vel = 0;
@@ -19,25 +19,17 @@ struct BodyConfig{
 
     double mass = DEFAULT_MASS;
     double restitution = DEFAULT_RESTITUTION;
-
-    BodyConfig() {}
-    BodyConfig(Point position, DirVector velocity, DirVector acceleration, double mass=DEFAULT_MASS, double restitution=DEFAULT_RESTITUTION) :
-        position(position), velocity(velocity), acceleration(acceleration), mass(mass), restitution(restitution) {}
-
-    BodyConfig(const BodyConfig& other) = default;
-
-    BodyConfig(BodyConfig&& other) = default;
 };
 
 
 class Body{
 private:
-    Point position;
-    DirVector velocity;
-    DirVector acceleration;
+    Point position{};
+    DirVector velocity{};
+    DirVector acceleration{};
 
-    double mass;
-    double restitution;
+    double mass{};
+    double restitution{};
 
     double angle = 0;
     double angular_vel = 0;
@@ -70,11 +62,11 @@ public:
     }
     void movePos(const DirVector& distance) {position += distance;}
 
-    const Point& getPosition() const {return position;}
-    const DirVector& getVelocity() const {return velocity;}
-    const DirVector& getAcceleration() const {return acceleration;}
-    double getMass() const {return mass;}
-    double getInverseMass() const {
+    constexpr const Point& getPosition() const {return position;}
+    constexpr const DirVector& getVelocity() const {return velocity;}
+    constexpr const DirVector& getAcceleration() const {return acceleration;}
+    constexpr double getMass() const {return mass;}
+    constexpr double getInverseMass() const {
         // TODO different handle of 0 mass objects
         if(mass == 0){
             LOG_ERROR("Can't calculate inverse mass of 0 mass");
@@ -84,15 +76,15 @@ public:
 
         return 1/mass;
     } 
-    double getRestitution() const {return restitution;}
+    constexpr double getRestitution() const {return restitution;}
 
-    double getAngle() const {return angle;}
-    double getAngularVel() const {return angular_vel;}
-    double getInertia() const {return inertia;}
-    double getInverseInertia() const {return inverse_inertia;}
+    constexpr double getAngle() const {return angle;}
+    constexpr double getAngularVel() const {return angular_vel;}
+    constexpr double getInertia() const {return inertia;}
+    constexpr double getInverseInertia() const {return inverse_inertia;}
 };
 
 
-inline double calcRestitutionCoefficient(const Body& body1, const Body& body2){
+inline constexpr double calcRestitutionCoefficient(const Body& body1, const Body& body2){
     return (body1.getRestitution()/2 + body2.getRestitution()/2);
 }

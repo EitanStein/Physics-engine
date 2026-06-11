@@ -4,8 +4,8 @@
 constexpr double timestep = 0.1;
 
 int main(){
-    PhysicsObject circle1(ShapeFactory::createCircle(5), BodyConfig(Point(0, 10), DirVector(0, 0), DirVector(0, -10)));
-    PhysicsObject circle2(ShapeFactory::createCircle(5), BodyConfig(Point(0, -10), DirVector(0, 0), DirVector(0, 10)));
+    PhysicsObject circle1(ShapeFactory::createCircle(5), BodyConfig(Point{0, 10}, DirVector{0, 0}, DirVector{0, -10}));
+    PhysicsObject circle2(ShapeFactory::createCircle(5), BodyConfig(Point{0, -10}, DirVector{0, 0}, DirVector{0, 10}));
 
     Body& body1 = circle1.getBody();
     Body& body2 = circle2.getBody();

@@ -19,5 +19,6 @@ public:
     virtual bool contains([[maybe_unused]] const Point& pos,[[maybe_unused]] const Point& point) const {return false;};
     virtual ShapeT::Type type() const = 0;
     virtual ~Shape() = default;
+    virtual double boundingRadius() const = 0;
 };
 
